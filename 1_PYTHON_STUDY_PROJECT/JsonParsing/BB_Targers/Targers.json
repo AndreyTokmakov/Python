@@ -1,0 +1,24 @@
+[
+    {
+        "name" : "chromedriver_tests",
+        "buildCommand" : "chrome/test/chromedriver:chromedriver_tests",
+        "executableName" : "chromedriver_tests.exe",
+        "description" : "  [Chromedriver tests]",
+		"osSupported" : ["Win7"]
+    },
+    {
+        "name" : "chromedriver_unittests",
+        "buildCommand" : "chrome/test/chromedriver:chromedriver_unittests",
+        "executableName" : "chromedriver_unittests.exe",
+        "description" : "  [Chromedriver unit tests]",
+        "type" : "UNIT_TESTS",
+		"osSupported" : ["Win7","Win8","Win10"]
+    },
+    {
+        "name" : "browser_tests",
+        "buildCommand" : "chrome/test:browser_tests",
+        "executableName" : "browser_tests.exe",
+        "description" : "  [Browser tests]",
+		"osSupported" : ["Win7","Win8"]
+    }
+]

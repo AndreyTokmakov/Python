@@ -1,0 +1,117 @@
+{
+    "features": {
+      "process_num": 0,
+      "isoclines_num": 400,
+      "threshold": 1.7,
+      "curve_degree": 2.0,
+      
+      "out_poly_coef": 0.8,
+      "iter_num": 2,
+      "relaxation_factor": 0.1,         
+      "out_poly_num": 60000
+    },
+  
+    "b_silence": 0,
+    "d_tork_angle_add": 0.0,
+  
+    "upper": {
+      "b_enable": 1,
+      "estimator": "ellipse",
+      "class": -1,
+      "n_idc_find": 4,
+      "n_idc_move": 4,
+  
+      "setup": {
+        "max_error_curve_est_percentage": 0.1,
+        "teeth_max_inter_space": 0.3,
+        "teeth_default_inter_space": 0.1,
+  
+        "b_setup_symmetry": 0,
+        "d_tork_angle": 20.0,
+  
+        "b_group_transformation_policy": 0,
+        "b_group_teeth_policy": 1
+      },
+  
+      "mesh": {
+      }
+    },
+  
+    "lower": {
+      "b_enable": 1,
+      "estimator": "ellipse",
+      "class": -1,
+      "n_idc": 4,
+  
+      "setup": {
+        "max_error_curve_est_percentage": 0.1,
+        "teeth_max_inter_space": 0.3,
+        "teeth_default_inter_space": 0.1,
+  
+        "b_setup_symmetry": 0,
+        "d_tork_angle": 20.0,
+  
+        "b_group_transformation_policy": 0,
+        "b_group_teeth_policy": 1
+  
+      },
+  
+      "mesh": {
+      }
+      
+    },
+  
+    "setup": {
+      "max_error_curve_est_percentage": 0.1,
+      "teeth_max_inter_space": 2,
+      "teeth_default_inter_space": 0.2,
+  
+      "b_move_exclude_collision": 0,
+  
+      "b_only_detect_collide": 0,
+      "rebuild_cp": 0,
+    
+      "b_setup_symmetry": 1,
+      "d_tork_angle": 20.0,
+  
+      "d_CHECK_EPS": 0.01,
+      "d_CHECK_TRANSLATION": 0.1,
+      "d_CHECK_ANGLE_DEG": 0.08,
+  
+      "n_max_stages": 100,
+      "n_min_stages": 1,
+  
+      "b_group_transformation_policy": 1,
+      "b_group_teeth_policy": 1,
+  
+      "max_translation": 0.2,
+      "max_rotation": 2.0,
+      "max_angulation": 1.5
+    },
+  
+    "mesh": {
+      "b_smooth_stl": 1,
+      "n_out_poly_num": 36000,
+      "n_smooth_iter": 4,
+      "d_relaxation_factor": 0.1
+    },
+  
+    "vis": {
+      "b_mesh_vis": 1,
+      "b_cp_vis": 1,
+      "fl_axis_vis": 2,
+      "b_curvature_vis": 0,
+      "n_tooth_select": -1
+    },
+  
+    "save": {
+      "b_res": 1,
+      "b_res_as_stl": 1,
+      "b_res_each_stage": 1,
+      "b_xz_plane": 0,
+      "b_images": 0,
+      "b_res_obj_frm": 0,
+      "b_extract_teeth": 0
+    }
+  
+  }
