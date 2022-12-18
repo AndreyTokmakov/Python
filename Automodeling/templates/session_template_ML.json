@@ -1,0 +1,25 @@
+{
+    "paths": {
+        "file_config": "/home/andtokm/Projects/data/cases_ml/<CASE_ID>/automodeling/<CASE_ID>_config.json",
+        "file_u":      "/home/andtokm/Projects/data/cases_ml/<CASE_ID>/automodeling/crowns/<CASE_ID>_upper.stl",
+        "file_l":      "/home/andtokm/Projects/data/cases_ml/<CASE_ID>/automodeling/crowns/<CASE_ID>_lower.stl",
+        "dir_out":     "/home/andtokm/Projects/data/cases_ml/<CASE_ID>/automodeling/out",
+        "file_t": ""
+    },
+    "hash_for_patient_tag": "<CASE_ID>",
+    "missing_id": <MISSING_IDS>,
+    "__control_points_lower": [
+        [ -17.1272, -1.670723 , 4.9364 ],
+        [ 18.3369 , -1.583673 , 4.9364],
+        [-1.178574, -1.862856,  20.9382]
+    ],
+    "disable_idc_find": 0,
+    "t_num_l_begin": -1,
+    "t_num_l_last": -1,
+    "t_num_u_begin": -1,
+    "t_num_u_last": -1,
+    "is_test": 1,
+    "enable_preview": 1,
+    "disable_processing": 0,  
+    "disable_move": 1
+}
