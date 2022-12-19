@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import os
 import sys  # TODO: Remove it
-sys.path.append('/home/andtokm/DiskS/ProjectsUbuntu/Python/TII_TestFramework/Sensor')
-
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")
 
 from abc import ABC, abstractmethod
 from multiprocessing import Process

@@ -1,4 +1,3 @@
-
 from flask import Flask, Markup, render_template
 
 app = Flask(__name__)
@@ -36,11 +35,12 @@ def pie():
                            set=zip(values, labels, colors))
 """
 
-@app.route('/line')
+
+@app.route('/')
 def line():
     line_labels = labels
     line_values = values
-    return render_template('line_chart.html.html', title='Bitcoin Monthly Price in USD', max=17000, labels=line_labels,
+    return render_template('line_chart.html', title='Bitcoin Monthly Price in USD', max=17000, labels=line_labels,
                            values=line_values)
 
 
