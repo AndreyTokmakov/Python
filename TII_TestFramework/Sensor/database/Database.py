@@ -12,7 +12,7 @@ from sqlalchemy import create_engine
 
 
 class Database(metaclass=SingletonMeta):
-    __db_path__: str = '/home/andtokm/tmp/sensor.db'
+    __db_path__: str = '/tmp/sensor.db'
     __base__: DeclarativeMeta = declarative_base()
     __engine__: sqlalchemy.engine = None
 

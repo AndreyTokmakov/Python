@@ -53,7 +53,7 @@ class NetworkMonitor(IService):
             with Session(bind=self.db.engine) as session:
                 # TODO: Add NetworkStats --> NetworkGeneral cast
                 stat1 = NetworkGeneral(total=delta.packets_total,
-                                       tcp=delta.packets_total,
+                                       tcp=delta.tcp_packets,
                                        icmp=delta.icmp_packets,
                                        udp=delta.udp_packets)
                 session.add_all([stat1])

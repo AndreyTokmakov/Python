@@ -92,7 +92,7 @@ def select_where_blocks():
 
 
 if __name__ == '__main__':
-    # create_tables()
+    create_tables()
 
     # insert_records()
     # insert_records2()
@@ -106,3 +106,4 @@ if __name__ == '__main__':
     # print(datetime.datetime.utcnow())
     # print(datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc))
 
+    pass

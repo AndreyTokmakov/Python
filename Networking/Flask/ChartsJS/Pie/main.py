@@ -20,7 +20,7 @@ colors = [
     "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"]
 
 
-@app.route('/pie')
+@app.route('/')
 def pie():
     pie_labels = labels
     pie_values = values

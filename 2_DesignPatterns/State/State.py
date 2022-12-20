@@ -1,8 +1,8 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 
-class Context(ABC):
 
+class Context(ABC):
     _state = None
 
     def __init__(self, state: State):
@@ -48,6 +48,7 @@ class ConcreteStateA(State):
 
     def handle2(self):
         print("ConcreteStateA handles request2.")
+
 
 class ConcreteStateB(State):
 

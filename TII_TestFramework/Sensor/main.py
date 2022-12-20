@@ -7,6 +7,7 @@ from modules.Sensor import Sensor
 from services.NetworkMonitor import NetworkMonitor
 from services.DummyService import DummyService
 from services.NotificationService import NotificationService
+from tests.FlaskTests.Test1.main import run_test_server
 
 
 
@@ -34,6 +35,7 @@ if __name__ == '__main__':
     # DummyService().start()
     NetworkMonitor().start()
     NotificationService().start()
+    run_test_server()
 
     """
     while True:
