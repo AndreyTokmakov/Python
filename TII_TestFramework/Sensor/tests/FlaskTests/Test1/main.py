@@ -50,13 +50,16 @@ ctx = Context()
 @app.route('/')
 def line():
     timestamps = [x.timestamp for x in ctx.table]
+    total = [y.total for y in ctx.table]
+    tcp = [y.tcp for y in ctx.table]
+    icmp = [y.icmp for y in ctx.table]
+    udp = [y.udp for y in ctx.table]
+
     return render_template('dashboard.html',
-                           total_values=[y.total for y in ctx.table], total_timestamps=timestamps,
-                           total_legend="Packet total",
-                           tcp_values=[y.total for y in ctx.table], tcp_timestamps=timestamps,
-                           tcp_legend="TCP packet total",
-                           icmp_values=[y.icmp for y in ctx.table], icmp_timestamps=timestamps,
-                           icmp_legend="ICMP packet total"
+                           total_values=total, total_timestamps=timestamps, total_legend="Packet total",
+                           tcp_values=tcp, tcp_timestamps=timestamps, tcp_legend="TCP packet total",
+                           icmp_values=icmp, icmp_timestamps=timestamps, icmp_legend="ICMP packet total",
+                           udp_values=udp, udp_timestamps=timestamps, udp_legend="UDP packet total",
                            )
 
 
