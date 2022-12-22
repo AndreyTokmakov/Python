@@ -1,0 +1,6 @@
+
+# (optional) list included tests here:
+# tests: ['B201', 'B301']
+
+# (optional) list skipped tests here:
+skips: ['B506']

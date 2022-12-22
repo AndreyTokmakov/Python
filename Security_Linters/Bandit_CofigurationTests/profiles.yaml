@@ -1,0 +1,15 @@
+
+profiles:
+    YamlLoads:
+        include:
+            - yaml_load
+        exclude:
+
+    SkipYamlLoads:
+        exclude:
+            - yaml_load
+
+
+    SqlInjection:
+        include:
+            - hardcoded_sql_expressions

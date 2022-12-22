@@ -1,0 +1,9 @@
+
+### profile may optionally select or skip tests
+exclude_dirs: ['tests', 'path/to/file']
+
+# (optional) list included tests here:
+# tests: ['B201', 'B301']
+
+# (optional) list skipped tests here:
+# skips: ['B101', 'B601']
