@@ -1,5 +1,7 @@
+import os
 import sys  # TODO: Remove it
-sys.path.append('/home/andtokm/DiskS/ProjectsUbuntu/Python/TII_TestFramework/Sensor')
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")
+
 
 from sqlalchemy.orm import DeclarativeMeta
 
@@ -10,7 +12,7 @@ from sqlalchemy import create_engine
 
 
 class Database(metaclass=SingletonMeta):
-    __db_path__: str = '/home/andtokm/DiskS/Temp/my_test_3.db'
+    __db_path__: str = '/home/andtokm/tmp/sensor.db'
     __base__: DeclarativeMeta = declarative_base()
     __engine__: sqlalchemy.engine = None
 

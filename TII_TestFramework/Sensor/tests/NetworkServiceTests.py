@@ -1,8 +1,6 @@
 import os
-
-import sys
-
-sys.path.append('/home/andtokm/DiskS/ProjectsUbuntu/Python/TII_TestFramework/Sensor')
+import sys  # TODO: Remove it
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")
 
 import time
 import threading

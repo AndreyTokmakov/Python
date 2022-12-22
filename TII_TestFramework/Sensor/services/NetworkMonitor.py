@@ -1,6 +1,6 @@
-
-import sys
-sys.path.append('/home/andtokm/DiskS/ProjectsUbuntu/Python/TII_TestFramework/Sensor')
+import os
+import sys  # TODO: Remove it
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")
 
 import os
 import time
@@ -53,7 +53,7 @@ class NetworkMonitor(IService):
             with Session(bind=self.db.engine) as session:
                 # TODO: Add NetworkStats --> NetworkGeneral cast
                 stat1 = NetworkGeneral(total=delta.packets_total,
-                                       tcp=delta.packets_total,
+                                       tcp=delta.tcp_packets,
                                        icmp=delta.icmp_packets,
                                        udp=delta.udp_packets)
                 session.add_all([stat1])
@@ -78,7 +78,7 @@ class NetworkMonitor(IService):
         ethernet_header: EthernetHeader = EthernetHeader(packet[: ETHERNET_HEADER_LEN])
 
         # Parse IP packets, IP Protocol number = 8
-        if ethernet_header.protocol == 8:
+        if ethernet_header.protocol == 8 and len(packet) > (ETHERNET_HEADER_LEN + 20):
             ip_data: bytes = packet[ETHERNET_HEADER_LEN: 20 + ETHERNET_HEADER_LEN]
             ip_header: IPHeader = IPHeader(ip_data)
 

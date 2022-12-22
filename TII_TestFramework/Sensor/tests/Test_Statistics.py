@@ -1,6 +1,7 @@
 
+import os
 import sys  # TODO: Remove it
-sys.path.append('/home/andtokm/DiskS/ProjectsUbuntu/Python/TII_TestFramework/Sensor')
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")
 
 from network.statistics.NetworkStats import NetworkStats
 

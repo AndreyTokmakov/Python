@@ -37,11 +37,17 @@ def Range_BetweenDates_2():
         print(datetime.date.fromordinal(ordinal))
 
 
+def create_manually():
+    d = datetime.datetime(year=2020, month=1, day=31, hour=13, minute=14, second=31)
+    print(d)
+
+
 if __name__ == '__main__':
     # IntTime();
     # TimeStr();
     # isLeapYear()
 
     # Range_BetweenDates()
-    Range_BetweenDates_2()
+    # Range_BetweenDates_2()
+    create_manually()
 

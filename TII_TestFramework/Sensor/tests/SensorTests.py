@@ -1,6 +1,7 @@
-
+import os
 import sys  # TODO: Remove it
-sys.path.append('/home/andtokm/DiskS/ProjectsUbuntu/Python/TII_TestFramework/Sensor')
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")
+
 
 import time
 from modules.Service import IService
@@ -60,7 +61,6 @@ class Tests:
 
     @staticmethod
     def check_instances_IDs2():
-
         dummy = DummyService()
         dummy.start()
         sensor: Sensor = Sensor()
@@ -75,7 +75,6 @@ class Tests:
         # print(dummy.pool, f'pool id: {id(dummy.pool)}')
         # print(dummy.pool.services, f'id: {id(dummy.pool.services)}')
 
-
     @staticmethod
     def check_sensor_is_single_instance():
         s1, s2 = Sensor(), Sensor()
@@ -84,11 +83,8 @@ class Tests:
         print(s1 is s2)
 
 
-
-
-
 if __name__ == '__main__':
     # Tests.add_services_tests()
-    # Tests.check_instances_IDs()
-    Tests.check_instances_IDs2()
+    Tests.check_instances_IDs()
+    # Tests.check_instances_IDs2()
     # Tests.check_sensor_is_single_instance()

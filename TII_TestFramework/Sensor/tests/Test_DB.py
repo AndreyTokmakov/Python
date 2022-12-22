@@ -1,9 +1,10 @@
+
+import os
 import sys  # TODO: Remove it
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")
+
 import datetime
-
 from sqlalchemy import select
-
-sys.path.append('/home/andtokm/DiskS/ProjectsUbuntu/Python/TII_TestFramework/Sensor')
 
 from sqlalchemy.orm import Session
 from database.model.NetworkGeneral import NetworkGeneral
@@ -91,7 +92,7 @@ def select_where_blocks():
 
 
 if __name__ == '__main__':
-    # create_tables()
+    create_tables()
 
     # insert_records()
     # insert_records2()
@@ -100,8 +101,9 @@ if __name__ == '__main__':
     # select_last()
     # select_where()
     # select_where_LIMIT()
-    select_where_blocks()
+    # select_where_blocks()
 
     # print(datetime.datetime.utcnow())
     # print(datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc))
 
+    pass

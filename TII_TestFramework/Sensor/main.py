@@ -1,5 +1,5 @@
-import sys  # TODO: Remove it
-sys.path.append('/home/andtokm/DiskS/ProjectsUbuntu/Python/TII_TestFramework/Sensor')
+# import sys  # TODO: Remove it
+# sys.path.append('/home/andtokm/Projects/Python/TII_TestFramework/Sensor')
 
 import time
 from modules.Service import IService
@@ -7,6 +7,7 @@ from modules.Sensor import Sensor
 from services.NetworkMonitor import NetworkMonitor
 from services.DummyService import DummyService
 from services.NotificationService import NotificationService
+from tests.FlaskTests.Test1.main import run_test_server
 
 
 
@@ -31,9 +32,10 @@ from services.NotificationService import NotificationService
 if __name__ == '__main__':
     sensor: Sensor = Sensor()
 
-    DummyService().start()
+    # DummyService().start()
     NetworkMonitor().start()
     NotificationService().start()
+    run_test_server()
 
     """
     while True:

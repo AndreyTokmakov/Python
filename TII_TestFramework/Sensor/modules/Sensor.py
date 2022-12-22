@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import os
 import sys  # TODO: Remove it
-sys.path.append('/home/andtokm/Projects/Python/TII_TestFramework/Sensor')
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")
+
 
 import time
 from threading import Thread

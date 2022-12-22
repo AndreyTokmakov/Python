@@ -213,12 +213,13 @@ def get_mem():
         buffers = int(data[2])
         cachedmem = int(data[3])
 
+
         # Memory in buffers + cached is actually available, so we count it
         # as free. See http://www.linuxatemyram.com/ for details
-        freemem += buffers + cachedmem
+        freemem += buffers
 
         percent = (100 - ((freemem * 100) / allmem))
-        usage = (allmem - freemem)
+        usage = allmem - freemem
 
         mem_usage = {'usage': usage, 'buffers': buffers, 'cached': cachedmem, 'free': freemem, 'percent': percent}
 
@@ -267,7 +268,7 @@ def get_load():
     Get load average
     """
     try:
-        data = os.getloadavg()[0]
+        data = os.getloadavg()
     except Exception as err:
         data = str(err)
 
@@ -294,7 +295,7 @@ def get_netstat():
 
 
 if __name__ == '__main__':
-    # print(get_load())
+    print(get_load())
     # print(get_cpu_usage())
 
     # print(get_mem())
@@ -302,7 +303,7 @@ if __name__ == '__main__':
     # print(get_disk())
     # print(get_disk_rw())
 
-    print(get_uptime())
+    # print(get_uptime())
     # print(get_ipaddress())
     # print(get_cpus())
     # print(get_users())
@@ -310,3 +311,5 @@ if __name__ == '__main__':
 
     # print(get_netstat())
     # print(get_traffic('enp2s0'))
+
+    pass

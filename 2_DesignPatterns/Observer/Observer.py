@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from random import randrange
 from typing import List
 
+
 class IObservable(ABC):
 
     @abstractmethod
@@ -16,6 +17,7 @@ class IObservable(ABC):
     @abstractmethod
     def notify(self):
         pass
+
 
 class ConcreteSubject(IObservable):
     _state: int = None

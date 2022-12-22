@@ -54,9 +54,12 @@ def inspect_ethernet_packet(packet: memoryview) -> None:
     eth_length: int = 14
 
     eth_header = packet[:eth_length]
-    eth = struct.unpack('!6s6sH' , eth_header)
+    eth = struct.unpack('!6s6sH', eth_header)
     eth_protocol = socket.ntohs(eth[2])
     stc_mac, dst_mac = eth_header[0:6], packet[6:12]
+
+    print(len(packet))
+
 
     # Parse IP packets, IP Protocol number = 8
     if eth_protocol == 8:
