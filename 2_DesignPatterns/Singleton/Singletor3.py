@@ -1,10 +1,9 @@
 
-class Singleton:
-    instance = None
+class Singleton(object):
 
     def __new__(cls):
-        if cls.instance is None:
-            cls.instance = super().__new__(cls)
+        if not hasattr(cls, 'instance'):
+            cls.instance = super(Singleton, cls).__new__(cls)
 
         return cls.instance
 
