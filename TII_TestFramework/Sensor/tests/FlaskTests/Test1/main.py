@@ -35,8 +35,8 @@ class Context(object):
 
                 for entry in result_set:
                     self.table.append(entry)
+                    start_from = entry.timestamp
 
-                start_from = self.table[-1].timestamp
                 time.sleep(1)
 
     def start(self):
