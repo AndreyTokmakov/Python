@@ -25,6 +25,8 @@ TCP_HEADER_LEN: int = 20
 class NetworkMonitor(IService):
     ETHERNET_HEADER_LEN: int = 14
 
+    WRITE_STATS_TO_DB_TIMEOUT: float = 5.0
+
     def __init__(self) -> None:
         IService.__init__(self)
         self.stats: NetworkStats = NetworkStats()
@@ -44,23 +46,19 @@ class NetworkMonitor(IService):
             curr_stats = self.stats.clone()
             delta = curr_stats - prev_stats
 
-            # os.system("clear")
-            # print(curr_stats, "\n", delta)
+            # TODO: Add NetworkStats --> NetworkGeneral cast
+            stat1 = NetworkGeneral(total=delta.packets_total,
+                                   tcp=delta.tcp_packets,
+                                   icmp=delta.icmp_packets,
+                                   udp=delta.udp_packets)
 
-            prev_stats = curr_stats
-
-            # '''
+            # TODO: here we may need to use lock
             with Session(bind=self.db.engine) as session:
-                # TODO: Add NetworkStats --> NetworkGeneral cast
-                stat1 = NetworkGeneral(total=delta.packets_total,
-                                       tcp=delta.tcp_packets,
-                                       icmp=delta.icmp_packets,
-                                       udp=delta.udp_packets)
                 session.add_all([stat1])
                 session.commit()
-            # '''
 
-            time.sleep(5)
+            prev_stats = curr_stats
+            time.sleep(NetworkMonitor.WRITE_STATS_TO_DB_TIMEOUT)
 
     def sniff_traffic(self) -> None:
         # create an INET, raw socket
@@ -89,4 +87,4 @@ class NetworkMonitor(IService):
             elif socket.IPPROTO_TCP == ip_header.protocol:
                 self.stats.tcp_packets += 1
             elif socket.IPPROTO_UDP == ip_header.protocol:
-                self.stats.tcp_packets += 1
+                self.stats.udp_packets += 1

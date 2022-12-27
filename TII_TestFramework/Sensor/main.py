@@ -42,4 +42,5 @@ if __name__ == '__main__':
     # DummyService().start()
     NetworkMonitor().start()
     NotificationService().start()
+
     run_test_server()
