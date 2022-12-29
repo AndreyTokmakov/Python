@@ -113,6 +113,12 @@ def call_grep_awk_without_shell():
 soc_version_cmd = "cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}'"
 
 
+def manual_linux_pipe_emulation():
+    cmd: str = "ls -lar /home/andtokm/DiskS/Temp/ | grep db"
+
+    print(cmd.split('|'))
+
+
 if __name__ == '__main__':
     # Exec("ls -lar")
     # Exec2()
@@ -123,4 +129,6 @@ if __name__ == '__main__':
 
     # experiments()
     # call_grep_without_shell()
-    call_grep_awk_without_shell()
+    # call_grep_awk_without_shell()
+
+    manual_linux_pipe_emulation()
