@@ -2,6 +2,7 @@ import subprocess, shlex
 import sys
 import time
 from pathlib import Path
+from typing import List
 
 
 def Exec(cmd: str):
@@ -87,15 +88,14 @@ def experiments():
 
 
 def call_grep_without_shell():
-    proc_cmd, grep_cmd = 'ps aux', 'grep python'
+    proc_cmd, grep_cmd = 'cat /proc/cpuinfo', 'grep vendor_id'
 
-    p1 = subprocess.Popen(proc_cmd.split(),
-                          stdout=subprocess.PIPE)
-    p2 = subprocess.Popen(grep_cmd.split(),
-                          stdin=p1.stdout,
-                          stdout=subprocess.PIPE)
-
-    output = p2.communicate()[0]
+    proc1 = subprocess.Popen(proc_cmd.split(),
+                             stdout=subprocess.PIPE)
+    proc2 = subprocess.Popen(grep_cmd.split(),
+                             stdin=proc1.stdout,
+                             stdout=subprocess.PIPE)
+    output = proc2.communicate()[0]
     print(output)
 
 
@@ -114,9 +114,43 @@ soc_version_cmd = "cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}'"
 
 
 def manual_linux_pipe_emulation():
-    cmd: str = "ls -lar /home/andtokm/DiskS/Temp/ | grep db"
+    command: str = "cat /proc/cpuinfo | grep vendor_id"
+    sub_commands: List[str] = list(map(str.strip, command.split('|')))
 
-    print(cmd.split('|'))
+    proc_list: List[subprocess.Popen] = []
+    for cmd in sub_commands:
+        proc = subprocess.Popen(cmd.split(),
+                                stdin=None if not proc_list else proc_list[-1].stdout,
+                                stdout=subprocess.PIPE)
+        proc_list.append(proc)
+
+    output = proc_list[-1].communicate()[0]
+    print(output)
+
+
+def manual_linux_pipe_emulation2():
+    command: str = "cat /proc/cpuinfo | grep apicid | grep 3"
+    sub_commands: List[str] = list(map(str.strip, command.split('|')))
+
+    stdout = None
+    for cmd in sub_commands:
+        proc = subprocess.Popen(cmd.split(),
+                                stdin=stdout,
+                                stdout=subprocess.PIPE)
+        stdout = proc.stdout
+
+    output = proc.communicate()[0]
+    print(output)
+
+
+def manual_linux_pipe(command: str):
+    sub_commands: List[str] = list(map(str.strip, command.split('|')))
+    stdout, proc = None, None
+    for cmd in sub_commands:
+        proc = subprocess.Popen(cmd.split(), stdin=stdout, stdout=subprocess.PIPE)
+        stdout = proc.stdout
+
+    return proc.communicate()[0]
 
 
 if __name__ == '__main__':
@@ -131,4 +165,9 @@ if __name__ == '__main__':
     # call_grep_without_shell()
     # call_grep_awk_without_shell()
 
-    manual_linux_pipe_emulation()
+    # manual_linux_pipe_emulation()
+    # manual_linux_pipe_emulation2()
+
+    # result = manual_linux_pipe("cat /proc/cpuinfo | grep vendor_id | awk '{print $3}'")
+    result = manual_linux_pipe("ps aux | grep libexec | grep color")
+    print(result)
