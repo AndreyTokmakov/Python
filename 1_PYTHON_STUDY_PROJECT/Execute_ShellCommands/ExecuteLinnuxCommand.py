@@ -168,7 +168,8 @@ if __name__ == '__main__':
     # manual_linux_pipe_emulation()
     # manual_linux_pipe_emulation2()
 
-    cmd: str = "cat /proc/cpuinfo | grep vendor_id | awk '{print $3}'"
+    cmd: str = "cat /proc/cpuinfo | grep vendor_id"
+    # cmd: str = "cat /proc/cpuinfo | grep vendor_id | awk \'{print $3}\'"
     # cmd: str = "ps aux | grep libexec | grep color"
 
     print(manual_linux_pipe(cmd))
