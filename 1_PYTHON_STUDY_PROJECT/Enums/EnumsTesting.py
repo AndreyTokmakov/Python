@@ -3,11 +3,11 @@ from enum import IntEnum
 
 
 class TargetType(Enum):
-    UNDEFINED = 0;
-    UNIT_TESTS = 1;
-    BROWSER_TESTS = 2;
-    PERFORMANCE_TESTS = 3;
-    INSTALLER_PY_TESTS = 4;
+    UNDEFINED = 0
+    UNIT_TESTS = 1
+    BROWSER_TESTS = 2
+    PERFORMANCE_TESTS = 3
+    INSTALLER_PY_TESTS = 4
 
 
 class Color(Enum):

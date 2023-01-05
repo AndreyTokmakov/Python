@@ -1,5 +1,29 @@
-# import ethip
+import netifaces
+import psutil
+import uuid
+import re
+
+
+def get_network_interfaces():
+    addrs = psutil.net_if_addrs()
+    print(addrs.keys())
+
+
+def get_network_physical_address(netInterfaceName):
+    iface = netifaces.ifaddresses(netInterfaceName)
+    print(iface)
+
+
+def get_mac():
+    mac = uuid.getnode()
+    print(':'.join(re.findall('..', '%012x' % mac)))
+
 
 if __name__ == "__main__":
-    # print ethip.getip('00:1E:C9:56:3C:8E', '10.5.42.255')
-    pass
+    # get_network_interfaces()
+    # get_network_physical_address("wlp4s0")
+    # get_mac()
+
+    for iface in netifaces.interfaces(): 
+
+        print(netifaces.ifaddresses(iface))

@@ -1,3 +1,6 @@
+from typing import Dict
+
+
 def CreateDictTests():
     d1 = {'key1': 1, 'key2': 2}
     print(d1)
@@ -40,6 +43,18 @@ def Pop():
     print(values)
 
 
+def Get():
+    map: Dict[int, str] = {1: "One"}
+    print(map)
+
+    # two = map.get(2, "Two")
+
+    two = map.setdefault(2, "Two")
+
+    print(two)
+
+    print(map)
+
 
 def CheckIFKeyExists():
     values = {'key1': 1, 'key2': 2, 'key3': 3, 'key4': 4, 'key5': 5}
@@ -56,6 +71,42 @@ def UpdateValue_With_Get():
     values['key6'] = count + 101
 
     print(values)
+
+
+class Holder:
+
+    def __init__(self, name: str):
+        self.name = name
+
+    def __str__(self):
+        return f'Holder({self.name})'
+
+    def __repr__(self):
+        return str(self)
+
+
+def UpdateValue_With_Get_2():
+    map = {1: "One", 2: "Two", 3: "Three"}
+
+    val = map.get(2, "Something")
+    print(val)
+
+    val = f'[{val}]'
+
+    print(map)
+
+
+def UpdateValue_With_Get_3():
+    map: Dict[int, Holder] = {1: Holder("One"), 2: Holder("Two"), 3: Holder("Three")}
+
+    val = map.get(2, "Something")
+    print(val)
+
+    val.name = f'**{val.name }**'
+
+    print(map)
+
+
 
 
 def Add_Default():
@@ -121,12 +172,15 @@ def Find_Same_Keys_In_Two_Maps():
 if __name__ == '__main__':
     # CreateDictTests();
     # Iterate_Dict()
-    # pop();
+    # Pop()
+    Get()
     # CheckIFKeyExists();
 
     # UpdateValue_With_Get()
+    # UpdateValue_With_Get_2()
+    # UpdateValue_With_Get_3()
 
-    Add_Default()
+    # Add_Default()
     # Add_Default_2()
 
     # Use_Custom_Class_As_Key()

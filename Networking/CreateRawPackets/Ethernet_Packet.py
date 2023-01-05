@@ -100,6 +100,12 @@ def init_ethernet_packet():
         .set_source_mac('aa:bb:cc:dd:ee:ff')\
         .set_protocol(ETH_P_IP)
 
+    mac: bytes = struct.pack('6s', eth_header.destination_mac)
+    print(mac)
+
+    # binascii.unhexlify(mac_address.replace(':', ''))
+
+    '''    
     packet = eth_header.data
 
     sock = create_raw_socket()
@@ -107,6 +113,7 @@ def init_ethernet_packet():
 
     for _ in range(10):
         bytes_send: int = sock.send(packet)
+    '''
 
 
 if __name__ == '__main__':
