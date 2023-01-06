@@ -21,6 +21,24 @@ ETHERNET_HEADER_LEN: int = 14
 BROADCAST_MAC: str = 'ff:ff:ff:ff:ff:ff'
 
 
+class CMSData(object):
+    INTERFACE_NAME: str = 'wlp1s0'
+    INTERFACE_MAC_ADDR: str = '00:30:1a:4f:8d:c4'
+    INTERFACE_IP_ADDR: str = '192.168.1.5'
+    APR_SCAN_START_ADDR: str = '192.168.1.0'
+
+
+class LocalData(object):
+    INTERFACE_NAME: str = 'wlp0s20f3'
+    INTERFACE_MAC_ADDR: str = 'bc:6e:e2:03:74:ba'
+    INTERFACE_IP_ADDR: str = '192.168.57.54'
+    APR_SCAN_START_ADDR: str = '192.168.57.0'
+
+
+# data = LocalData()
+data = CMSData()
+
+
 class ARPScanner(object):
 
     def __init__(self):
@@ -29,19 +47,27 @@ class ARPScanner(object):
 
         # TODO: Need to get them automatically:
         # TODO: Get interface name from 'batctl if'
-        self.INTERFACE_NAME: str = 'wlp4s0'
-        self.INTERFACE_MAC_ADDR: str = 'a8:93:4a:4e:00:6b'
-        self.INTERFACE_IP_ADDR: str = '192.168.0.184'
-        self.APR_SCAN_START_ADDR: str = '192.168.0.0'
+        self.INTERFACE_NAME: str = data.INTERFACE_NAME
+        self.INTERFACE_MAC_ADDR: str = data.INTERFACE_MAC_ADDR
+        self.INTERFACE_IP_ADDR: str = data.INTERFACE_IP_ADDR
+        self.APR_SCAN_START_ADDR: str = data.APR_SCAN_START_ADDR
 
         # TODO: Check if its OK to read and write from the same socket
         self.sock = ARPScanner.create_raw_socket()
         self.sock.bind((self.INTERFACE_NAME, 0))
 
+        # Maximum time to wait for ARP response packets:
+        self.max_timeout: float = 3.0
+
     @staticmethod
     def create_raw_socket() -> socket:
         try:  # create an INET, raw socket
             sock: socket = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
+
+            # Set receive timeout to 0.1 sec
+            timeval = struct.pack('ll', 0, 250000)
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVTIMEO, timeval)
+
             return sock
         except socket.error as error:
             # TODO: Add logging
@@ -70,38 +96,41 @@ class ARPScanner(object):
 
         mac_list_bytes: Set[bytes] = {ARPHeader.str_2_mac(m) for m in mac_list}
         ARP_TYPE: int = socket.ntohs(EthernetProtocolIDs.ETH_P_ARP)
+
+        mac_list_len: int = len(mac_list_bytes)
+        start: float = time.time()
         while True:
-            recv: Tuple = self.sock.recvfrom(65565)
-            packet: bytes = recv[0]
-            ethernet_header: EthernetHeader = EthernetHeader.create(packet[: ETHERNET_HEADER_LEN])
+            try:
+                recv: Tuple = self.sock.recvfrom(65565)
+                packet: bytes = recv[0]
+                ethernet_header: EthernetHeader = EthernetHeader.create(packet[: ETHERNET_HEADER_LEN])
 
-            if ethernet_header.protocol == ARP_TYPE:
-                arp: ARPHeader = ARPHeader.create(packet[ETHERNET_HEADER_LEN: 28 + ETHERNET_HEADER_LEN])
+                if ethernet_header.protocol == ARP_TYPE:
+                    arp: ARPHeader = ARPHeader.create(packet[ETHERNET_HEADER_LEN: 28 + ETHERNET_HEADER_LEN])
 
-                if not arp.is_request() and arp.sender_mac in mac_list_bytes:
-                    self.results[arp.sender_mac] = arp.sender_ip
-                    # TODO: need somehow to STOP the thread
+                    if not arp.is_request() and arp.sender_mac in mac_list_bytes:
+                        self.results[arp.sender_mac] = arp.sender_ip
+                        # Check if we've got all replies we needed:
+                        if mac_list_len == len(self.results.keys()):
+                            break
 
-    def scan_arp(self):
-        macs: List[str] = ['f4:8c:eb:00:b8:61', 'a8:93:4a:4e:00:6b', 'f4:8c:eb:a4:68:d7', '60:32:b1:ad:d6:99',
-                           'f4:8c:eb:17:6c:a9', '78:98:e8:0d:b6:a9']
+            except Exception as exc:
+                pass
+            if (time.time() - start) >= self.max_timeout:
+                break
 
+    def scan_arp(self, macs: List[str]) -> Dict[bytes, bytes]:
         self.results.clear()
 
-        # TODO: Add socket wait/read timeout
-        thread = Thread(target=self.wait_for_apr_reply, args=(macs, ))
+        thread = Thread(target=self.wait_for_apr_reply, args=(macs,))
         thread.start()
 
-        time.sleep(0.5)
+        time.sleep(0.25)
 
         self.broadcast_requests()
+        thread.join()
 
-        time.sleep(0.5)
-
-        for mac, ip in self.results.items():
-            sender_ip: str = socket.inet_ntoa(struct.pack('4s', ip))
-            sender_mac_str: str = self.mac_bytes_2_str(mac)
-            print(f"Reply: {sender_ip} is-at {sender_mac_str}")
+        return self.results
 
 
 class Node(object):
@@ -140,6 +169,7 @@ class BatmanWrapper(object):
 
     def __init__(self):
         self.nodes: Dict[str, Node] = defaultdict(Node)
+        self.apr_scanner: ARPScanner = ARPScanner()
 
     # TODO: Refactor | Move ---> Utils
     @staticmethod
@@ -175,12 +205,11 @@ class BatmanWrapper(object):
         return nodes_list
 
     def validate_available_nodes(self) -> bool:
-        update_required: bool = False
+        # Get the B.A.T.M.A.N neighbourhoods + add missing to internal storage:
         nodes_list: List[Node] = BatmanWrapper.get_batman_nodes()
         for node in nodes_list:
             if node.mac_address not in self.nodes:
                 self.nodes[node.mac_address] = node
-                update_required = True
 
         # Mark all nodes missing in 'nodes_list' with node.status = False
         active_nodes_macs: Set[str] = {n.mac_address for n in nodes_list}
@@ -188,26 +217,57 @@ class BatmanWrapper(object):
             if node.mac_address not in active_nodes_macs:
                 node.status = False
 
-        return update_required
+        # Do we have some node without IP address? :
+        has_node_without_ip: bool = any(node.ip_address is None for node in self.nodes.values())
+
+        return has_node_without_ip
 
     def try_find_IPs(self):
-        node_to_inspect: Dict[str, Node] = {k: v for k, v in self.nodes.items() if v.ip_address is None}
-        print(node_to_inspect)
+        macs_to_inspect: List[str] = [k for k, v in self.nodes.items() if v.ip_address is None]
+        scan_results: Dict[bytes, bytes] = self.apr_scanner.scan_arp(macs_to_inspect)
 
-    # TODO: Remove
-    def debug(self):
-        for n, v in self.nodes.items():
-            print(n, v)
+        # FIXME: Refactor??? Str -> Bytes
+        for mac, ip in scan_results.items():
+            sender_ip: str = socket.inet_ntoa(struct.pack('4s', ip))
+            sender_mac_str: str = self.apr_scanner.mac_bytes_2_str(mac)
+            # node: Node = self.nodes.get(sender_mac_str, Node())
+            self.nodes[sender_mac_str].ip_address = sender_ip
+            print(f"ARP Reply: {sender_mac_str} ==>  {sender_ip}")
+
+    def print_nodes_table(self):
+        for node in self.nodes.values():
+            print(f'{node.mac_address}  {node.ip_address}  {node.interface_name}  {node.status}')
 
 
 def run_cms():
     batman: BatmanWrapper = BatmanWrapper()
 
+    start: float = time.time()
     while True:
-        print(batman.validate_available_nodes())
+        update_required: bool = batman.validate_available_nodes()
+        if update_required:
+            batman.try_find_IPs()
+        print(f'update_required: {update_required}')
         time.sleep(1)
+
+        if (time.time() - start) >= 60:  # 1 min has passed
+            start = time.time()
+            batman.print_nodes_table()
+
+
+def run_local():
+    # macs: List[str] = ['e8:eb:34:bf:80:2f', 'a8:93:4a:4e:00:6b', 'f4:8c:eb:a4:68:d7']
+    macs: List[str] = ['e8:eb:34:bf:80:2f', 'e8:eb:34:bf:95:2f', '68:7d:b4:fd:9a:ab']
+
+    apr_scanner: ARPScanner = ARPScanner()
+    scan_results: Dict[bytes, bytes] = ARPScanner().scan_arp(macs)
+
+    for mac, ip in scan_results.items():
+        sender_ip: str = socket.inet_ntoa(struct.pack('4s', ip))
+        sender_mac_str: str = apr_scanner.mac_bytes_2_str(mac)
+        print(f"Reply: {sender_ip} is-at {sender_mac_str}")
 
 
 if __name__ == '__main__':
-    ARPScanner().scan_arp()
-    # run_cms()
+    run_local()
+    run_cms()

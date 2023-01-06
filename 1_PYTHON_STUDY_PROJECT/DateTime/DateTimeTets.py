@@ -5,7 +5,7 @@ import datetime
 def IntTime():
     now = datetime.datetime.now()
     timeInt = int(time.mktime(now.timetuple()))
-    print(timeInt);
+    print(timeInt)
 
 
 def TimeStr():
@@ -23,7 +23,7 @@ def isLeapYear():
 def Range_BetweenDates():
     start = datetime.datetime.strptime("2019-02-01", "%Y-%m-%d")
     end = datetime.datetime.strptime("2019-02-28", "%Y-%m-%d")
-    date_generated = [start + datetime.timedelta(days=x) for x in range(0, (end-start).days)]
+    date_generated = [start + datetime.timedelta(days=x) for x in range(0, (end - start).days)]
 
     for date in date_generated:
         print(date.strftime("%d-%m-%Y"))
@@ -42,6 +42,29 @@ def create_manually():
     print(d)
 
 
+def measure_interval():
+    start: float = time.time()
+    time.sleep(1)
+    print(time.time() - start)
+
+
+def measure_interval_2():
+    start: float = time.time_ns()
+    time.sleep(1)
+
+    end: float = time.time_ns()
+    print(f"Elapsed time: {end - start} ns")
+
+
+def measure_interval_3():
+    start: float = time.perf_counter()
+    time.sleep(1)
+
+    end: float = time.perf_counter()
+    print(f"Elapsed time: {end - start} micro seconds")
+
+
+
 if __name__ == '__main__':
     # IntTime();
     # TimeStr();
@@ -49,5 +72,8 @@ if __name__ == '__main__':
 
     # Range_BetweenDates()
     # Range_BetweenDates_2()
-    create_manually()
+    # create_manually()
 
+    measure_interval()
+    # measure_interval_2()
+    # measure_interval_3()

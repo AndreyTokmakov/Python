@@ -102,11 +102,9 @@ def UpdateValue_With_Get_3():
     val = map.get(2, "Something")
     print(val)
 
-    val.name = f'**{val.name }**'
+    val.name = f'**{val.name}**'
 
     print(map)
-
-
 
 
 def Add_Default():
@@ -169,11 +167,29 @@ def Find_Same_Keys_In_Two_Maps():
     print(a.items() & b.items())  # Find (key,value) pairs in common
 
 
+def check_values_by_condition():
+    class Data:
+        def __init__(self, v: int = 0, n: str = None):
+            self.value = v
+            self.text = n
+
+        def __repr__(self):
+            return f'Data({self.value}, {self.text})'
+
+    map: Dict[int, Data] = {1: Data(1, "One"), 2: Data(2, "Two"), 3: Data(3, "Three")}
+    # map: Dict[int, Data] = {1: Data(1, "One"), 2: Data(2), 3: Data(3, "Three")}
+
+    b1: bool = any(d.text is None for d in map.values())
+
+    print(map)
+    print(b1)
+
+
 if __name__ == '__main__':
     # CreateDictTests();
     # Iterate_Dict()
     # Pop()
-    Get()
+    # Get()
     # CheckIFKeyExists();
 
     # UpdateValue_With_Get()
@@ -185,3 +201,5 @@ if __name__ == '__main__':
 
     # Use_Custom_Class_As_Key()
     # Find_Same_Keys_In_Two_Maps()
+
+    check_values_by_condition()

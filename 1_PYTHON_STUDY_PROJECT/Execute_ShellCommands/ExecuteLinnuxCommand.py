@@ -16,8 +16,7 @@ def Exec(cmd: str):
             line = proc.stdout.readline()
             if not line:
                 break
-            line = str(line.rstrip()).strip("b'")
-            print(line)
+            print(str(line.rstrip()).strip("b'"))
             sys.stdout.flush()
 
     except OSError as exc:
@@ -28,8 +27,19 @@ def Exec(cmd: str):
     return proc.poll()
 
 
-def Exec2():
-    cmd = 'ping -c 5 localhost'
+def ExecSync(cmd: str) -> List[str]:
+    try:
+        stdout, stderr = subprocess.Popen(cmd.split(),
+                                          shell=False,
+                                          stdout=subprocess.PIPE,
+                                          stderr=subprocess.PIPE).communicate()
+    except OSError as exc:
+        raise RuntimeError(f"Error: {exc}")
+
+    return stdout.decode().rstrip().split('\n')
+
+
+def Exec2(cmd: str):
     ping_cmd = subprocess.Popen(shlex.split(cmd),
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE)
@@ -155,7 +165,11 @@ def manual_linux_pipe(command: str):
 
 if __name__ == '__main__':
     # Exec("ls -lar")
-    # Exec2()
+    # Exec2('ls -lar')
+
+    cmd_lines: List[str] = ExecSync('ls -lar')
+    for line in cmd_lines:
+        print(line)
 
     # Test()
     # Test2()
@@ -168,9 +182,18 @@ if __name__ == '__main__':
     # manual_linux_pipe_emulation()
     # manual_linux_pipe_emulation2()
 
+    '''
     cmd: str = "cat /proc/cpuinfo | grep vendor_id"
     # cmd: str = "cat /proc/cpuinfo | grep vendor_id | awk \'{print $3}\'"
     # cmd: str = "ps aux | grep libexec | grep color"
 
     print(manual_linux_pipe(cmd))
+    '''
 
+'''    iw_cmd = ['iw', 'reg', 'get']
+    iw_proc = subprocess.Popen(iw_cmd, stdout=subprocess.PIPE)
+    out = iw_proc.communicate()[0].decode().rstrip()
+
+    lines = out.split("\n")
+    for l in lines:
+        print(l)'''
