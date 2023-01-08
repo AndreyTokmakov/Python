@@ -1,12 +1,13 @@
-
 import os
 import sys  # TODO: Remove it
+
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")
 
 import datetime
 from sqlalchemy import select
-
+from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.orm import Session
+
 from database.model.NetworkGeneral import NetworkGeneral
 from database.Database import Database
 
@@ -15,23 +16,28 @@ db: Database = Database()
 
 def create_tables():
     # Base.metadata.create_all(engine)
+    db.validate()
     db.base.metadata.create_all(db.engine)
     pass
 
 
+def validate_database():
+    db.validate()
+
+
 def insert_records():
-    session = Session(bind=db.engine)
-
-    stat1 = NetworkGeneral(total=4, tcp=2, icmp=1, udp=1)
-
-    session.add_all([stat1])
-    session.commit()
-
-
-def insert_records2():
     with Session(bind=db.engine) as session:
         stat1 = NetworkGeneral(total=4, tcp=2, icmp=1, udp=1)
 
+        session.add_all([stat1])
+        session.commit()
+
+
+def insert_records_validate():
+    db.validate(db)
+
+    with Session(bind=db.engine) as session:
+        stat1 = NetworkGeneral(total=4, tcp=2, icmp=1, udp=1)
         session.add_all([stat1])
         session.commit()
 
@@ -92,10 +98,12 @@ def select_where_blocks():
 
 
 if __name__ == '__main__':
-    create_tables()
+    # create_tables()
+
+    # validate_database()
 
     # insert_records()
-    # insert_records2()
+    insert_records_validate()
 
     # select_test()
     # select_last()

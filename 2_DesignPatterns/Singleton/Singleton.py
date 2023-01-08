@@ -22,23 +22,28 @@ class Singleton(metaclass=SingletonMeta):
 
     def __init__(self):
         print("Singleton created")
+        self.__counter: int = 0
 
     def some_business_logic(self):
         """
-        Finally, any singleton should define some business logic, which can be
-        executed on its instance.
+        Finally, any singleton should define some business logic, which can be executed on its instance.
         """
 
-        # ...
+    @property
+    def counter(self):
+        return self.__counter
+
+    @counter.setter
+    def counter(self, a):
+        self.__counter = a
 
 
 if __name__ == "__main__":
-    # The client code.
+    s1, s2 = Singleton(), Singleton()
 
-    s1 = Singleton()
-    s2 = Singleton()
+    assert s1 == s2
+    assert s1 is s2
 
-    if id(s1) == id(s2):
-        print("Singleton works, both variables contain the same instance.")
-    else:
-        print("Singleton failed, variables contain different instances.")
+    print(s1.counter)
+    s1.counter = 12
+    print(s2.counter)

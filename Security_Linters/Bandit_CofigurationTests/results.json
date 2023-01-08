@@ -1,0 +1,461 @@
+{
+  "errors": [],
+  "generated_at": "2022-12-27T05:27:19Z",
+  "metrics": {
+    "./check_results.py": {
+      "CONFIDENCE.HIGH": 2,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 2,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 69,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "./modules/skip.py": {
+      "CONFIDENCE.HIGH": 5,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 5,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 7,
+      "nosec": 2,
+      "skipped_tests": 0
+    },
+    "./modules/sql_statements.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 8,
+      "CONFIDENCE.MEDIUM": 6,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 14,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 26,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "_totals": {
+      "CONFIDENCE.HIGH": 7,
+      "CONFIDENCE.LOW": 8,
+      "CONFIDENCE.MEDIUM": 6,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 7,
+      "SEVERITY.MEDIUM": 14,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 102,
+      "nosec": 2,
+      "skipped_tests": 0
+    }
+  },
+  "results": [
+    {
+      "code": "2 import json\n3 import subprocess\n4 from typing import Dict, List\n",
+      "col_offset": 0,
+      "filename": "./check_results.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 3,
+      "line_range": [
+        3
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "44     try:\n45         proc = subprocess.Popen(cmd.split(), text=True, shell=False,\n46                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT)\n47         while True:\n",
+      "col_offset": 15,
+      "filename": "./check_results.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 45,
+      "line_range": [
+        45,
+        46
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "1 subprocess.call([\"/bin/ls\", \"-l\"])\n2 subprocess.call([\"/bin/ls\", \"-l\"]) #noqa\n3 subprocess.call([\"/bin/ls\", \"-l\"]) # noqa\n",
+      "col_offset": 0,
+      "filename": "./modules/skip.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 1,
+      "line_range": [
+        1
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "1 subprocess.call([\"/bin/ls\", \"-l\"])\n2 subprocess.call([\"/bin/ls\", \"-l\"]) #noqa\n3 subprocess.call([\"/bin/ls\", \"-l\"]) # noqa\n",
+      "col_offset": 0,
+      "filename": "./modules/skip.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 2,
+      "line_range": [
+        2
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "2 subprocess.call([\"/bin/ls\", \"-l\"]) #noqa\n3 subprocess.call([\"/bin/ls\", \"-l\"]) # noqa\n4 subprocess.call([\"/bin/ls\", \"-l\"]) # nosec\n",
+      "col_offset": 0,
+      "filename": "./modules/skip.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 3,
+      "line_range": [
+        3
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "4 subprocess.call([\"/bin/ls\", \"-l\"]) # nosec\n5 subprocess.call([\"/bin/ls\", \"-l\"])\n6 subprocess.call([\"/bin/ls\", \"-l\"]) #nosec\n",
+      "col_offset": 0,
+      "filename": "./modules/skip.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 5,
+      "line_range": [
+        5
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "6 subprocess.call([\"/bin/ls\", \"-l\"]) #nosec\n7 subprocess.call([\"/bin/ls\", \"-l\"])\n",
+      "col_offset": 0,
+      "filename": "./modules/skip.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 7,
+      "line_range": [
+        7
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "3 # bad\n4 query = \"SELECT * FROM foo WHERE id = '%s'\" % identifier\n5 query = \"INSERT INTO foo VALUES ('a', 'b', '%s')\" % value\n",
+      "col_offset": 8,
+      "filename": "./modules/sql_statements.py",
+      "issue_confidence": "LOW",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 4,
+      "line_range": [
+        4
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "4 query = \"SELECT * FROM foo WHERE id = '%s'\" % identifier\n5 query = \"INSERT INTO foo VALUES ('a', 'b', '%s')\" % value\n6 query = \"DELETE FROM foo WHERE id = '%s'\" % identifier\n",
+      "col_offset": 8,
+      "filename": "./modules/sql_statements.py",
+      "issue_confidence": "LOW",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 5,
+      "line_range": [
+        5
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "5 query = \"INSERT INTO foo VALUES ('a', 'b', '%s')\" % value\n6 query = \"DELETE FROM foo WHERE id = '%s'\" % identifier\n7 query = \"UPDATE foo SET value = 'b' WHERE id = '%s'\" % identifier\n",
+      "col_offset": 8,
+      "filename": "./modules/sql_statements.py",
+      "issue_confidence": "LOW",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 6,
+      "line_range": [
+        6
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "6 query = \"DELETE FROM foo WHERE id = '%s'\" % identifier\n7 query = \"UPDATE foo SET value = 'b' WHERE id = '%s'\" % identifier\n8 query = \"\"\"WITH cte AS (SELECT x FROM foo)\n",
+      "col_offset": 8,
+      "filename": "./modules/sql_statements.py",
+      "issue_confidence": "LOW",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 7,
+      "line_range": [
+        7
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "7 query = \"UPDATE foo SET value = 'b' WHERE id = '%s'\" % identifier\n8 query = \"\"\"WITH cte AS (SELECT x FROM foo)\n9 SELECT x FROM cte WHERE x = '%s'\"\"\" % identifier\n10 # bad alternate forms\n",
+      "col_offset": 8,
+      "filename": "./modules/sql_statements.py",
+      "issue_confidence": "LOW",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 8,
+      "line_range": [
+        8,
+        9
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "10 # bad alternate forms\n11 query = \"SELECT * FROM foo WHERE id = '\" + identifier + \"'\"\n12 query = \"SELECT * FROM foo WHERE id = '{}'\".format(identifier)\n",
+      "col_offset": 8,
+      "filename": "./modules/sql_statements.py",
+      "issue_confidence": "LOW",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 11,
+      "line_range": [
+        11
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "11 query = \"SELECT * FROM foo WHERE id = '\" + identifier + \"'\"\n12 query = \"SELECT * FROM foo WHERE id = '{}'\".format(identifier)\n13 \n",
+      "col_offset": 8,
+      "filename": "./modules/sql_statements.py",
+      "issue_confidence": "LOW",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 12,
+      "line_range": [
+        12
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "14 # bad\n15 cur.execute(\"SELECT * FROM foo WHERE id = '%s'\" % identifier)\n16 cur.execute(\"INSERT INTO foo VALUES ('a', 'b', '%s')\" % value)\n",
+      "col_offset": 12,
+      "filename": "./modules/sql_statements.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 15,
+      "line_range": [
+        15
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "15 cur.execute(\"SELECT * FROM foo WHERE id = '%s'\" % identifier)\n16 cur.execute(\"INSERT INTO foo VALUES ('a', 'b', '%s')\" % value)\n17 cur.execute(\"DELETE FROM foo WHERE id = '%s'\" % identifier)\n",
+      "col_offset": 12,
+      "filename": "./modules/sql_statements.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 16,
+      "line_range": [
+        16
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "16 cur.execute(\"INSERT INTO foo VALUES ('a', 'b', '%s')\" % value)\n17 cur.execute(\"DELETE FROM foo WHERE id = '%s'\" % identifier)\n18 cur.execute(\"UPDATE foo SET value = 'b' WHERE id = '%s'\" % identifier)\n",
+      "col_offset": 12,
+      "filename": "./modules/sql_statements.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 17,
+      "line_range": [
+        17
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "17 cur.execute(\"DELETE FROM foo WHERE id = '%s'\" % identifier)\n18 cur.execute(\"UPDATE foo SET value = 'b' WHERE id = '%s'\" % identifier)\n19 # bad alternate forms\n",
+      "col_offset": 12,
+      "filename": "./modules/sql_statements.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 18,
+      "line_range": [
+        18
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "19 # bad alternate forms\n20 cur.execute(\"SELECT * FROM foo WHERE id = '\" + identifier + \"'\")\n21 cur.execute(\"SELECT * FROM foo WHERE id = '{}'\".format(identifier))\n",
+      "col_offset": 12,
+      "filename": "./modules/sql_statements.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 20,
+      "line_range": [
+        20
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "20 cur.execute(\"SELECT * FROM foo WHERE id = '\" + identifier + \"'\")\n21 cur.execute(\"SELECT * FROM foo WHERE id = '{}'\".format(identifier))\n22 \n",
+      "col_offset": 12,
+      "filename": "./modules/sql_statements.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 21,
+      "line_range": [
+        21
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "34 \n35 a()(\"SELECT %s FROM foo\" % val)\n36 \n",
+      "col_offset": 4,
+      "filename": "./modules/sql_statements.py",
+      "issue_confidence": "LOW",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 35,
+      "line_range": [
+        35
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.7.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    }
+  ]
+}

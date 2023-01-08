@@ -1,14 +1,12 @@
-FROM ubuntu:latest
+FROM python:3-slim
 
-RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM" > /log
-RUN echo "Running apt-get update && upgrade"
+# RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM" > /log
+# RUN echo "Running apt-get update && upgrade"
 
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install python3 python3-pip net-tools nano -y
-
-RUN pip install sqlalchemy flask
+RUN pip install sqlalchemy sqlalchemy_utils flask
 
 COPY . /sensor
 WORKDIR /sensor
 
-RUN echo "*** Done ****"
+ENTRYPOINT ["python", "main.py"]

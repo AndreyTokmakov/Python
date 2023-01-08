@@ -14,7 +14,7 @@ def add_book(queue, book):
     queue.sort(key=lambda x: x.due_date, reverse=True)
 
 
-if __name__ == '__main__':
+def Book_Test():
     queue = []
 
     add_book(queue, Book('Don Quixote', '2019-06-07'))
@@ -24,3 +24,6 @@ if __name__ == '__main__':
 
     print(queue)
 
+
+if __name__ == '__main__':
+    pass

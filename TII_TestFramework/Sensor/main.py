@@ -1,14 +1,8 @@
-# import sys  # TODO: Remove it
-# sys.path.append('/home/andtokm/Projects/Python/TII_TestFramework/Sensor')
-
-import time
-from modules.Service import IService
+from database.Database import Database
 from modules.Sensor import Sensor
 from services.NetworkMonitor import NetworkMonitor
-from services.DummyService import DummyService
 from services.NotificationService import NotificationService
 from tests.FlaskTests.Test1.main import run_test_server
-
 
 
 # TODO:
@@ -19,27 +13,34 @@ from tests.FlaskTests.Test1.main import run_test_server
 #    - Process: for web server
 # 5. Database: SQLite
 
-# TODO:
+# TODO: Testing
 # 1. Add unit tests
 
-# TODO:
+# TODO: Logging
 # 1. Add logging (make it configurable)
 # 2. Add exception handling
 
 # TODO: Database
 # 1. Validate DB at startup
 
+def start_up():
+    if getattr(start_up, 'has_run', False):
+        return
+    start_up.has_run = True
+
+    db: Database = Database()
+    Database.validate(db)
+
+
 if __name__ == '__main__':
+    # Check DB and etc
+    # TODO: Handle failures???
+    start_up()
+
     sensor: Sensor = Sensor()
 
     # DummyService().start()
     NetworkMonitor().start()
     NotificationService().start()
-    run_test_server()
 
-    """
-    while True:
-        print(sensor.services_pool)
-        print(sensor.services_pool.services)
-        time.sleep(1)
-    """
+    run_test_server()

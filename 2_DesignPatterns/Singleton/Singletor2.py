@@ -9,12 +9,24 @@ class Singleton:
         return cls.instance
 
     def __init__(self):
-        print("Created()")
+        print("Singleton created")
+        self.__counter: int = 0
+
+    @property
+    def counter(self):
+        return self.__counter
+
+    @counter.setter
+    def counter(self, a):
+        self.__counter = a
 
 
 if __name__ == '__main__':
-   s1 = Singleton()
-   s2 = Singleton()
+    s1, s2 = Singleton(), Singleton()
 
-   print(s1 == s2)
-   print(s1 is s2)
+    assert s1 == s2
+    assert s1 is s2
+
+    print(s1.counter)
+    s1.counter = 12
+    print(s2.counter)

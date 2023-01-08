@@ -16,11 +16,21 @@ def open_port_2():
 
 
 def send_command():
-    with serial.Serial('/dev/ttyUSB0', 115200, timeout=1) as ser:
+    # cmd: bytes = b"ps axf\r\n"
+    cmd: bytes = b"ls -lar\r\n"
+
+    bytes_to_read: int = 256
+
+    with serial.Serial('/dev/ttyUSB0', 115200, timeout=0.1) as ser:
         print(ser.name, ser.is_open)
-        ser.write(b'ps axf\r\n')
-        data = ser.read(1000)
-        print(data)
+        ser.write(cmd)
+
+        while True:
+            data = ser.read(bytes_to_read)
+            # print(f'----------------------------- {len(data)} ------------------------------------')
+            print(data)
+            if bytes_to_read > len(data):
+                break
 
 
 if __name__ == '__main__':

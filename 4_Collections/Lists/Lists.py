@@ -2,7 +2,7 @@ from typing import List
 
 
 def PrintList(values: list) -> None:
-    print(", ".join(str(x) for x in values));
+    print(", ".join(str(x) for x in values))
 
 
 def List_Join():
@@ -11,30 +11,30 @@ def List_Join():
 
 
 def CrateList():
-    strings = list();
+    strings = list()
 
-    strings.append("val1");
-    strings.append("val2");
-    strings.append("val3");
+    strings.append("val1")
+    strings.append("val2")
+    strings.append("val3")
 
-    PrintList(strings);
+    PrintList(strings)
 
-    int_list = [5, 6, 7];
+    int_list = [5, 6, 7]
     print(type(int_list), " = ", int_list)
 
 
 def CrateList2():
-    strings = [];
+    strings = []
 
-    strings.append("val1");
-    strings.append("val2");
-    strings.append("val3");
+    strings.append("val1")
+    strings.append("val2")
+    strings.append("val3")
 
-    print(len(strings), ":", strings);
+    print(len(strings), ":", strings)
 
     strings.clear()
 
-    print(len(strings), ":", strings);
+    print(len(strings), ":", strings)
 
 
 def CreateList3():
@@ -46,35 +46,35 @@ def CreateList3():
 
     player_list = ['alice', 'xena', 'bob', 'veronica']
     sub_list = [player for player in player_list if player != 'bob']
-    print(sub_list);
+    print(sub_list)
 
 
 def SortList():
     ints = [1, 9, 22, 2, 3, 5, 7, 4]
-    PrintList(ints);
+    PrintList(ints)
 
     ints.sort()
-    PrintList(ints);
+    PrintList(ints)
 
 
 def Sort_Extend_Insert():
     strings = list();
 
-    strings.append("val1");
-    strings.append("val2");
-    strings.append("val3");
+    strings.append("val1")
+    strings.append("val2")
+    strings.append("val3")
 
-    PrintList(strings);
+    PrintList(strings)
 
     strings.extend(["val4", "val5"])
-    PrintList(strings);
+    PrintList(strings)
 
     strings.insert(2, "val3_Updater")
-    PrintList(strings);
+    PrintList(strings)
 
 
 def Pop_Test():
-    strings = ["val1", "val2", "val3"];
+    strings = ["val1", "val2", "val3"]
     print("Pop: ", strings.pop())
     PrintList(strings)
 
@@ -90,7 +90,7 @@ def Index_Count_Test():
 
 
 def SliceTests():
-    strings = ["val0", "val1", "val2", "val3", "val4", "val5"];
+    strings = ["val0", "val1", "val2", "val3", "val4", "val5"]
     PrintList(strings)
 
     print("[1:3] = ", strings[1:3])
@@ -100,7 +100,7 @@ def SliceTests():
     print("[::3] = ", strings[::3])
     print("[:-3] = ", strings[:-3])
 
-    strings[1:2] = ["Val0", "Val0", "val0"];
+    strings[1:2] = ["Val0", "Val0", "val0"]
     print(strings)
 
     # del Strings[:-2]
@@ -117,15 +117,15 @@ def Contains():
 def Contains2():
     strings = ['update.run', 'update.successful', 'update.run', 'update.install', 'install_started', 'update',
                'install_finished',
-               'update.successful'];
+               'update.successful']
     val = ['update.successful']
     # result = all(elem in strings2 for elem in strings1)
 
-    print(val[0] in strings);
+    print(val[0] in strings)
 
 
 def Contains_ALL():
-    strings = ['one', 'two', ' three', 'four', 'five', 'six', 'seven'];
+    strings = ['one', 'two', ' three', 'four', 'five', 'six', 'seven']
     to_find = ['one', 'two', ' three']
 
     result = all(elem in strings for elem in to_find)
@@ -155,11 +155,25 @@ def Contains_ANY():
     print(__contains_any(list1, list2))
 
 
-def Delete_TopRecord():
+def delete_top_record():
     strings = ["val1", "val2", "val3"]
 
     print("Pop: ", strings.pop(0))
     PrintList(strings)
+
+
+def check_empty():
+    numbers: List[int]  = []
+
+    if not numbers:
+        print('Empty')
+    else:
+        print('Not empty')
+
+    if len(numbers) > 0:
+        print('Empty')
+    else:
+        print('Not empty')
 
 
 if __name__ == '__main__':
@@ -176,11 +190,13 @@ if __name__ == '__main__':
     # Contains()
     # Contains2();
     # Contains_ALL();
-    Contains_ANY()
+    # Contains_ANY()
 
     # List_Join();
 
-    # Delete_TopRecord();
+    # delete_top_record()
+
+    check_empty()
 
     '''
     list = ['Code', 'Country name', 'Currency name', 'Symbol']

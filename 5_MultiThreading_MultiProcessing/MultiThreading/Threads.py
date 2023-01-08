@@ -114,7 +114,7 @@ def OneThread_Stops_Another():
 
 if __name__ == '__main__':
     # runSimpleThread()
-    parametrizedThread();
+    parametrizedThread()
     # startThread1();
     # twoThreads();
     # OneThread_Stops_Another();
