@@ -24,6 +24,6 @@ if __name__ == "__main__":
     # get_network_physical_address("wlp4s0")
     # get_mac()
 
-    for iface in netifaces.interfaces(): 
+    for iface in netifaces.interfaces():
 
         print(netifaces.ifaddresses(iface))

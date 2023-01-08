@@ -81,6 +81,23 @@ def Test3():
     print(stdout)
 
 
+def ExecuteCommand_Sync_ParserResponseLines():
+    cmd_lines: List[str] = ExecSync('ls -lar')
+    for line in cmd_lines:
+        print(line)
+
+
+def ExecuteCommand_WaitResponse():
+    cmd: str = "/home/andtokm/DiskS/Temp/Bin/Tests 5"
+    #'''
+    cmd_lines: List[str] = ExecSync(cmd)
+    for line in cmd_lines:
+        print(line)
+    #'''
+
+    # Exec(cmd)
+
+
 def experiments():
     cmd = 'ls -lar'
     # cmd = 'ps aux | grep python'
@@ -167,13 +184,13 @@ if __name__ == '__main__':
     # Exec("ls -lar")
     # Exec2('ls -lar')
 
-    cmd_lines: List[str] = ExecSync('ls -lar')
-    for line in cmd_lines:
-        print(line)
-
     # Test()
     # Test2()
     # Test3()
+
+    # ExecuteCommand_Sync_ParserResponseLines()
+
+    ExecuteCommand_WaitResponse()
 
     # experiments()
     # call_grep_without_shell()
@@ -181,6 +198,9 @@ if __name__ == '__main__':
 
     # manual_linux_pipe_emulation()
     # manual_linux_pipe_emulation2()
+
+
+
 
     '''
     cmd: str = "cat /proc/cpuinfo | grep vendor_id"
@@ -190,10 +210,12 @@ if __name__ == '__main__':
     print(manual_linux_pipe(cmd))
     '''
 
-'''    iw_cmd = ['iw', 'reg', 'get']
+    ''' 
+    iw_cmd = ['iw', 'reg', 'get']
     iw_proc = subprocess.Popen(iw_cmd, stdout=subprocess.PIPE)
     out = iw_proc.communicate()[0].decode().rstrip()
 
     lines = out.split("\n")
     for l in lines:
-        print(l)'''
+        print(l)
+    '''

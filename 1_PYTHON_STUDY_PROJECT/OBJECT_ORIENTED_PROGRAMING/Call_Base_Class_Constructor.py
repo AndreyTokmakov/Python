@@ -18,3 +18,6 @@ class Point3D(Point):
         return f'Point3D({self.x}, {self.y}, {self.z})'
 
 
+if __name__ == "__main__":
+    # The client code.
+    pt = Point3D(1, 2, 3)
