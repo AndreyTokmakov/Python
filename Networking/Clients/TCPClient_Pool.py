@@ -1,19 +1,10 @@
-import os
-import sys  # TODO: Remove it
 import socket
 import time
+from collections import defaultdict
 from typing import Dict, Tuple
 
-sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")
 
-from modules.Service import IService, ServicesPool
-from database.model.NetworkGeneral import NetworkGeneral
-from database.Database import Database
-from sqlalchemy.orm import Session
-
-
-# ------------------------------------------------------------------------------
-
+# TODO: Shall it be auto_closable?
 class TCPSession(object):
     MAX_RETRIES_ATTEMPTS: int = 5
 
@@ -36,7 +27,6 @@ class TCPSession(object):
         return str(self)
 
     def close(self) -> None:
-        print("*** CLOSE CALLED ****")  # REMOVE
         self.connected = False
         self.retries = 0
         self.timeout_sec = 1
@@ -48,7 +38,6 @@ class TCPSession(object):
             self.sock.sendall(bytes(buffer, "utf-8"))
             return True
         except Exception as exc:
-            print(exc)
             self.close()
             return False
 
@@ -88,32 +77,60 @@ class TCPConnectionManger(object):
                     return False
                 time.sleep(session.timeout_sec)
 
-# ------------------------------------------------------------------------------
 
+'''
+class TCPConnectionManger2(object):
+    instance = None
 
-class NotificationService(IService):
+    def __new__(cls):
+        if cls.instance is None:
+            cls.instance = super().__new__(cls)
+        return cls.instance
 
     def __init__(self):
-        IService.__init__(self)
-        self.db: Database = Database()
-        self.conn_manager: TCPConnectionManger = TCPConnectionManger()
-        self.ip: str = "0.0.0.0"
-        self.port: int = 52525
+        self.__connection_table: Dict[Tuple, TCPSession] = defaultdict(TCPSession)
 
-    def handler(self) -> None:
-        tcp_session: TCPSession = self.conn_manager.get_connection(self.ip, self.port)
-        while True:
-            with Session(bind=self.db.engine) as session:
-                last = session.query(NetworkGeneral).order_by(NetworkGeneral.timestamp.desc()).first()
-                stats: str = 'NetworkStats ['\
-                             f'\n\tpackets_total: {last.total}'\
-                             f'\n\ticmp_packets: {last.icmp}'\
-                             f'\n\ttcp_packets: {last.tcp}'\
-                             f'\n\tudp_packets: {last.udp}'\
-                             '\n]'
+    def get_connection(self,
+                       ip: str = "127.0.0,1",
+                       port: int = 0) -> TCPSession:  # socket.socket:
+        session: TCPSession = self.__connection_table[(ip, port)]
+        return session
+'''
 
-                # TODO: Refactor this logic???
-                # TODO: How much attempts are allowed here?? and so on
-                if not tcp_session.send(stats):
-                    tcp_session = self.conn_manager.get_connection(self.ip, self.port)
-                time.sleep(5)
+
+class Tests:
+
+    @staticmethod
+    def send_request():
+        data = "{\"type\": \"request\", \"data\": \"Hello world!\"}"
+
+        # Create a socket (SOCK_STREAM means a TCP socket)
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            # Connect to server and send data
+            sock.connect(("0.0.0.0", 52525))
+            sock.sendall(bytes(data + "\n", "utf-8"))
+
+        print("Sent:     {}".format(data))
+
+    @staticmethod
+    def is_same_session():
+
+        session1: TCPSession = TCPConnectionManger().get_connection("0.0.0.0", 52525)
+        session2: TCPSession = TCPConnectionManger().get_connection("0.0.0.0", 52525)
+
+        assert session1 == session2
+        assert session1 is session2
+
+        print(session1)
+        print(session2)
+
+
+if __name__ == "__main__":
+    mgr = TCPConnectionManger()
+    for idx in range(10):
+        session = mgr.get_connection("0.0.0.0", 52525)
+        result: bool = session.send(f'Hello_{idx}')
+        print(result)
+        time.sleep(1)
+
+    # Tests.is_same_session()
