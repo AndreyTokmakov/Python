@@ -16,7 +16,7 @@ from common.SingletonMeta import SingletonMeta
 
 
 class Database(metaclass=SingletonMeta):
-    __db_path__: str = '/tmp/sensor.db'
+    __db_path__: str = '/tmp/stats_collector.db'
     __base__: DeclarativeMeta = declarative_base()
     __engine__: sqlalchemy.engine = None
 

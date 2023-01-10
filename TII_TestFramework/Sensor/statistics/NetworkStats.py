@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+import datetime
+import json
+
 
 class NetworkStats:
 
     def __init__(self):
+        self.timestamp: datetime.datetime = datetime.datetime.utcnow()
         self.packets_total: int = 0
         self.icmp_packets: int = 0
         self.tcp_packets: int = 0
@@ -43,11 +47,13 @@ class NetworkStats:
     def __isub__(self, right: NetworkStats) -> NetworkStats:
         return self - right
 
-    def __repr__(self):
-        return 'NetworkStats [' \
-               f'\n\tpackets_total: {self.packets_total}' \
-               f'\n\ticmp_packets: {self.icmp_packets}' \
-               f'\n\ttcp_packets: {self.tcp_packets}' \
-               f'\n\tudp_packets: {self.udp_packets}' \
-               '\n]'
+    def __str__(self) -> str:
+        return json.dumps({'timestamp': str(self.timestamp),
+                           'packets_total': self.packets_total,
+                           'tcp_packets': self.tcp_packets,
+                           'udp_packets': self.icmp_packets,
+                           'icmp_packets': self.icmp_packets})
+
+    def __repr__(self) -> str:
+        return str(self)
 

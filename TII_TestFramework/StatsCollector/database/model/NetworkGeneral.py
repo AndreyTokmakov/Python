@@ -3,9 +3,8 @@ import os
 import sys  # TODO: Remove it
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/../..")
 
-import datetime
 
-from sqlalchemy import Integer, String, Column, DateTime, func
+from sqlalchemy import Integer, Column, DateTime, func
 from database.Database import Database
 
 

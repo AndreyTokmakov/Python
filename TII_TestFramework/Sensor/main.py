@@ -1,3 +1,4 @@
+from utilities.DbModelStatsConverter import DbModelStatsConverter
 from database.Database import Database
 from modules.Sensor import Sensor
 from services.NetworkMonitor import NetworkMonitor
@@ -35,6 +36,8 @@ def start_up():
 if __name__ == '__main__':
     # Check DB and etc
     # TODO: Handle failures???
+
+    # '''
     start_up()
 
     sensor: Sensor = Sensor()
@@ -44,3 +47,6 @@ if __name__ == '__main__':
     NotificationService().start()
 
     run_test_server()
+    # '''
+
+    # o = DbModelStatsConverter.NetworkStats_To_NetworkGeneral(None)

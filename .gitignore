@@ -2,7 +2,7 @@
 /CircleMakerSDET/.pytest_cache/
 /Cryptography/private-keys-v1.d/
 /Cryptography/openpgp-revocs.d/
-/DataBases/my_database.sqlite
+/DataBases/SQLite/my_database.sqlite
 /Scripts/
 /Pandas/data/
 /MachineLearning/TensorFlow/Classification/save_at_1.h5

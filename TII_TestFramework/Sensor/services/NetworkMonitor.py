@@ -1,8 +1,9 @@
 import os
-import sys  # TODO: Remove it
-sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")
+import sys
 
-import os
+
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/../statistics")  # REMOVE
+
 import time
 import threading
 import socket
@@ -11,11 +12,12 @@ from modules.Service import IService, ServicesPool
 from network.Headers.EthernetHeader import EthernetHeader
 from network.Headers.IPHeader import IPHeader
 from network.Headers.TCPHeader import TCPHeader
-from network.statistics.NetworkStats import NetworkStats
+from NetworkStats import NetworkStats
 
 from database.model.NetworkGeneral import NetworkGeneral
 from database.Database import Database
 
+from utilities.DbModelStatsConverter import DbModelStatsConverter
 from sqlalchemy.orm import Session
 
 ETHERNET_HEADER_LEN: int = 14
@@ -47,14 +49,11 @@ class NetworkMonitor(IService):
             delta = curr_stats - prev_stats
 
             # TODO: Add NetworkStats --> NetworkGeneral cast
-            stat1 = NetworkGeneral(total=delta.packets_total,
-                                   tcp=delta.tcp_packets,
-                                   icmp=delta.icmp_packets,
-                                   udp=delta.udp_packets)
+            stats: NetworkGeneral = DbModelStatsConverter.NetworkStats_To_NetworkGeneral(delta)
 
             # TODO: here we may need to use lock
             with Session(bind=self.db.engine) as session:
-                session.add_all([stat1])
+                session.add_all([stats])
                 session.commit()
 
             prev_stats = curr_stats

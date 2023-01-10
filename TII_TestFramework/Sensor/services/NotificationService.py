@@ -1,10 +1,13 @@
+import json
 import os
 import sys  # TODO: Remove it
 import socket
 import time
 from typing import Dict, Tuple
 
-sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")
+from utilities.DbModelStatsConverter import DbModelStatsConverter
+
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")  # REMOVE
 
 from modules.Service import IService, ServicesPool
 from database.model.NetworkGeneral import NetworkGeneral
@@ -12,6 +15,8 @@ from database.Database import Database
 from sqlalchemy.orm import Session
 
 
+# ------------------------------------------------------------------------------
+# TODO: Move it from here
 # ------------------------------------------------------------------------------
 
 class TCPSession(object):
@@ -105,15 +110,10 @@ class NotificationService(IService):
         while True:
             with Session(bind=self.db.engine) as session:
                 last = session.query(NetworkGeneral).order_by(NetworkGeneral.timestamp.desc()).first()
-                stats: str = 'NetworkStats ['\
-                             f'\n\tpackets_total: {last.total}'\
-                             f'\n\ticmp_packets: {last.icmp}'\
-                             f'\n\ttcp_packets: {last.tcp}'\
-                             f'\n\tudp_packets: {last.udp}'\
-                             '\n]'
+                stats = DbModelStatsConverter.NetworkGeneral_To_NetworkStats(last)
 
                 # TODO: Refactor this logic???
                 # TODO: How much attempts are allowed here?? and so on
-                if not tcp_session.send(stats):
+                if not tcp_session.send(str(stats)):
                     tcp_session = self.conn_manager.get_connection(self.ip, self.port)
                 time.sleep(5)
