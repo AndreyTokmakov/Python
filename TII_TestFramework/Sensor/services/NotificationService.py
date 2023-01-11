@@ -13,6 +13,7 @@ from database.model.NetworkGeneral import NetworkGeneral
 from database.Database import Database
 from NetworkStats import NetworkStats
 from sqlalchemy.orm import Session
+from configuration.Configuration import Configuration
 
 
 # ------------------------------------------------------------------------------
@@ -93,6 +94,7 @@ class TCPConnectionManger(object):
                     return False
                 time.sleep(session.timeout_sec)
 
+
 # ------------------------------------------------------------------------------
 
 
@@ -106,12 +108,18 @@ class NotificationService(IService):
         self.ip: str = "0.0.0.0"
         self.port: int = 52525
 
+        self.config: Configuration = Configuration()
+        self.config.init()
+
     def handler(self) -> None:
         tcp_session: TCPSession = self.conn_manager.get_connection(self.ip, self.port)
         while True:
             with Session(bind=self.db.engine) as session:
                 last = session.query(NetworkGeneral).order_by(NetworkGeneral.timestamp.desc()).first()
                 stats: NetworkStats = DbModelStatsConverter.NetworkGeneral_To_NetworkStats(last)
+
+                print(str(stats))
+                print(self.config.ip_address)
 
                 # TODO: Refactor this logic???
                 # TODO: How much attempts are allowed here?? and so on

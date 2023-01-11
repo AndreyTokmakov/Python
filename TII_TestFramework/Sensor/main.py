@@ -1,3 +1,4 @@
+from configuration.Configuration import Configuration
 from utilities.DbModelStatsConverter import DbModelStatsConverter
 from database.Database import Database
 from modules.Sensor import Sensor
@@ -29,6 +30,8 @@ from tests.FlaskTests.Test1.main import run_test_server
 # 2. Server Adress
 # 3. ????
 
+# TODO: Handle Ctrl+C
+
 def start_up():
     if getattr(start_up, 'has_run', False):
         return
@@ -36,6 +39,9 @@ def start_up():
 
     db: Database = Database()
     Database.validate(db)
+
+    # config = Configuration()
+    # config.init()
 
 
 if __name__ == '__main__':

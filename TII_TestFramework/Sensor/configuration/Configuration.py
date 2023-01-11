@@ -4,17 +4,16 @@ from typing import List
 import psutil
 
 
+# TODO: Refactor this SINGLETON
 class Configuration(object):
     __instance = None
     __constructed: bool = False
 
     def __init__(self):
-        if not self.__constructed:
-            self.__constructed = True
-            return
-
-        self.interface_name: str = "enp0s331f6"
-        self.ip_address: str = None
+        if not self.__constructed:  # TODO: BAD
+            self.interface_name: str = "enp0s31f6"
+            self.ip_address: str = "None"
+            Configuration.__constructed = True  # TODO: BAD
 
     def __new__(cls):
         if cls.__instance is None:
@@ -34,7 +33,7 @@ class Configuration(object):
         raise RuntimeError(f"Failed to get '{iface_name}' IPv4 address")
 
 
-'''
+
 if __name__ == "__main__":
     cfg1 = Configuration()
     cfg2 = Configuration()
@@ -44,4 +43,3 @@ if __name__ == "__main__":
     cfg1.init()
 
     print(cfg1.ip_address)
-'''
