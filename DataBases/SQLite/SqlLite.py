@@ -48,6 +48,6 @@ def select_data():
 
 if __name__ == '__main__':
     # create_table()
-    # insert_data()
-    select_data()
+    insert_data()
+    # select_data()
     # insert_data_2()

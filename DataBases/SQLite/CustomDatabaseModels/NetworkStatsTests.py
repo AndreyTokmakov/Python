@@ -1,12 +1,13 @@
 
-import os
-import sys  # TODO: Remove it
-sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/../..")
-
 import datetime
-
+from sqlalchemy import select
+from sqlalchemy_utils import database_exists, create_database
+from sqlalchemy.orm import Session
 from sqlalchemy import Integer, String, Column, DateTime, func
-from database.Database import Database
+
+from DataBases.SQLite.common.Database import Database
+
+db: Database = Database()
 
 
 class NetworkGeneral(Database().base):
@@ -24,3 +25,20 @@ class NetworkGeneral(Database().base):
 
     def __repr__(self):
         return f'NetworkGeneral[{self.timestamp, self.total, self.icmp, self.tcp, self.udp}]'
+
+
+def insert_records_validate():
+    Database.validate(db)
+
+    with Session(bind=db.engine) as session:
+        stat1 = NetworkGeneral(timestamp=datetime.datetime.utcnow(), total=4, tcp=2, icmp=1, udp=33)
+        session.add_all([stat1])
+        session.commit()
+
+
+if __name__ == '__main__':
+    # insert_records_validate()
+
+    # print(datetime.datetime.utcnow())
+    print(type(datetime.datetime.utcnow()))
+

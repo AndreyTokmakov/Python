@@ -100,13 +100,14 @@ def update_exising_add_missing():
     h1.name = "New"
     print(map)
 
+
 if __name__ == '__main__':
     # Simple_Test()
     # Log_Missing()
-    # Count_Missing_WithClass()
+    Count_Missing_WithClass()
     # List_as_Value()
     # Get()
 
-    update_exising_add_missing()
+    # update_exising_add_missing()
 
     pass

@@ -2,6 +2,7 @@ import os
 import sys  # TODO: Remove it
 
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/../..")
 
 import datetime
 from sqlalchemy import select
@@ -16,7 +17,9 @@ db: Database = Database()
 
 def create_tables():
     # Base.metadata.create_all(engine)
-    db.validate()
+    db: Database = Database()
+
+    Database.validate(db)
     db.base.metadata.create_all(db.engine)
     pass
 
@@ -34,7 +37,7 @@ def insert_records():
 
 
 def insert_records_validate():
-    db.validate(db)
+    Database.validate(db)
 
     with Session(bind=db.engine) as session:
         stat1 = NetworkGeneral(total=4, tcp=2, icmp=1, udp=1)
