@@ -51,7 +51,7 @@ class NetworkStats:
         return json.dumps({'timestamp': str(self.timestamp),
                            'packets_total': self.packets_total,
                            'tcp_packets': self.tcp_packets,
-                           'udp_packets': self.udp_packets,
+                           'udp_packets': self.icmp_packets,
                            'icmp_packets': self.icmp_packets})
 
     def __repr__(self) -> str:

@@ -5,13 +5,13 @@ import socket
 import time
 from typing import Dict, Tuple
 
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/../statistics")  # REMOVE
+
 from utilities.DbModelStatsConverter import DbModelStatsConverter
-
-sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/..")  # REMOVE
-
 from modules.Service import IService, ServicesPool
 from database.model.NetworkGeneral import NetworkGeneral
 from database.Database import Database
+from NetworkStats import NetworkStats
 from sqlalchemy.orm import Session
 
 
@@ -96,6 +96,7 @@ class TCPConnectionManger(object):
 # ------------------------------------------------------------------------------
 
 
+# TODO: Add LOGGING
 class NotificationService(IService):
 
     def __init__(self):
@@ -110,7 +111,7 @@ class NotificationService(IService):
         while True:
             with Session(bind=self.db.engine) as session:
                 last = session.query(NetworkGeneral).order_by(NetworkGeneral.timestamp.desc()).first()
-                stats = DbModelStatsConverter.NetworkGeneral_To_NetworkStats(last)
+                stats: NetworkStats = DbModelStatsConverter.NetworkGeneral_To_NetworkStats(last)
 
                 # TODO: Refactor this logic???
                 # TODO: How much attempts are allowed here?? and so on

@@ -1,12 +1,13 @@
-
 import time
 
 from multiprocessing import Process, Queue
+
 
 def work():
     for i in range(0, 10):
         print(i)
         time.sleep(1)
+
 
 def run_task():
     # queue = Queue()
@@ -15,8 +16,6 @@ def run_task():
     # p.join() # this blocks until the process terminates
     # result = queue.get()
     return p
-
-
 
 
 if __name__ == '__main__':

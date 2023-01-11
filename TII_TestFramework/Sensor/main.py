@@ -24,6 +24,11 @@ from tests.FlaskTests.Test1.main import run_test_server
 # TODO: Database
 # 1. Validate DB at startup
 
+# TODO: COnfiguration
+# 1. IP address
+# 2. Server Adress
+# 3. ????
+
 def start_up():
     if getattr(start_up, 'has_run', False):
         return
@@ -36,8 +41,6 @@ def start_up():
 if __name__ == '__main__':
     # Check DB and etc
     # TODO: Handle failures???
-
-    # '''
     start_up()
 
     sensor: Sensor = Sensor()
@@ -46,7 +49,4 @@ if __name__ == '__main__':
     NetworkMonitor().start()
     NotificationService().start()
 
-    run_test_server()
-    # '''
-
-    # o = DbModelStatsConverter.NetworkStats_To_NetworkGeneral(None)
+    # run_test_server()
