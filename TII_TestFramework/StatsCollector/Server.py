@@ -73,24 +73,29 @@ class Server(object):
     #       'data': '{}'
     #     }
     def handle_request(self, request: str):
-        print(request)
         request: Dict = json.loads(request)
 
-        timestamp: str = request['timestamp']
-        total: int = int(request['packets_total'])
-        tcp: int = int(request['tcp_packets'])
-        udp: int = int(request['udp_packets'])
-        icmp: int = int(request['icmp_packets'])
+        # TODO: FixMe: On the sender side: request['data'] should be a DICT with out json.loads
+        data: Dict = json.loads(request['data'])
 
         # TODO: we may need to have some additional logic here
         stats: NetworkStats = NetworkStats()
+        stats.total = data['packets_total']
+        stats.tcp = data['tcp_packets']
+        stats.udp = data['udp_packets']
+        stats.icmp = data['icmp_packets']
 
-        # FIXME:  'timestamp' shall be obtained from the request JSON
+        # TODO: Fixme
+        # stats.timestamp = int(data['timestamp'])
+        stats.timestamp = datetime.datetime.utcnow()
+
+        # FIXME: 'timestamp' shall be obtained from the request JSON
+        # TODO: Add conversation from NetworkStats <---> NetworkGeneral
         stats: NetworkGeneral = NetworkGeneral(timestamp=datetime.datetime.utcnow(),  # FIXME
-                                               total=total,
-                                               icmp=icmp,
-                                               tcp=tcp,
-                                               udp=udp)
+                                               total=stats.total,
+                                               icmp=stats.icmp,
+                                               tcp=stats.tcp,
+                                               udp=stats.udp)
 
         with Session(bind=self.database.engine) as session:
             session.add_all([stats])

@@ -118,11 +118,20 @@ class NotificationService(IService):
                 last = session.query(NetworkGeneral).order_by(NetworkGeneral.timestamp.desc()).first()
                 stats: NetworkStats = DbModelStatsConverter.NetworkGeneral_To_NetworkStats(last)
 
-                print(str(stats))
-                print(self.config.ip_address)
+                msg = {'type': 'network_stat',
+                       'ip': f'{self.config.ip_address}',
+                       'data': str(stats)  # FIXME
+                       }
+
+                data_to_send = json.dumps(msg)
+                # data_to_send = str(stats)
+                print(data_to_send)
 
                 # TODO: Refactor this logic???
                 # TODO: How much attempts are allowed here?? and so on
-                if not tcp_session.send(str(stats)):
+
+                if not tcp_session.send(data_to_send):
                     tcp_session = self.conn_manager.get_connection(self.ip, self.port)
+
+                # TODO: 5 --> To constant
                 time.sleep(5)

@@ -11,7 +11,7 @@ class Configuration(object):
 
     def __init__(self):
         if not self.__constructed:  # TODO: BAD
-            self.interface_name: str = "enp0s31f6"
+            self.interface_name: str = "wlp0s20f3"
             self.ip_address: str = "None"
             Configuration.__constructed = True  # TODO: BAD
 
@@ -31,7 +31,6 @@ class Configuration(object):
             if socket.AddressFamily.AF_INET == attr.family:
                 return attr.address
         raise RuntimeError(f"Failed to get '{iface_name}' IPv4 address")
-
 
 
 if __name__ == "__main__":
