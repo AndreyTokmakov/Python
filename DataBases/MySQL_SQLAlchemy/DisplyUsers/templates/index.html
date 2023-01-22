@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="title">{% block title %} DCube Users {% endblock %}</h1>
+<div class="content">
+    {% for user in input_users_list %}
+    <div class="users">
+        <p>ID: {{ user.id }}</p>
+        <p>Name: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Password: {{ user.password }}</p>
+        <p>Status: <b> {{ user.active }}</b></p>
+
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

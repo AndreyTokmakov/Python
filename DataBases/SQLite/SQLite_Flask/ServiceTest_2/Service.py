@@ -89,11 +89,13 @@ class Utils(object):
 
     @staticmethod
     def create_database():
+        db.init_app(flaskApp)
         with flaskApp.app_context():
             db.create_all()
 
     @staticmethod
     def create_users():
+        db.init_app(flaskApp)
         with flaskApp.app_context():
             john = Student(firstname='john', lastname='doe',
                            email='jd@example.com', age=23, bio='Biology student')
@@ -117,12 +119,12 @@ class Utils(object):
 
 if __name__ == '__main__':
     # Utils.create_database()
-    Utils.create_users()
+    # Utils.create_users()
 
-    '''
+    # '''
     # Register app with database backend
     db.init_app(flaskApp)
 
     with flaskApp.app_context():
         flaskApp.run(debug=True)
-    '''
+    # '''
