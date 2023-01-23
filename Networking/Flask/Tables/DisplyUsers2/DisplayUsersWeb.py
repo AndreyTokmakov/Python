@@ -29,7 +29,6 @@ class User(db.Model, UserMixin):
 
 
 CONNECT_STRING = 'mysql+pymysql://admin:qwerty12345@0.0.0.0:3306/dcube'
-# engine: Engine = sqlalchemy.create_engine(CONNECT_STRING)
 
 flaskApp = Flask(__name__)
 # flaskApp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/db_service_2.db'
@@ -42,7 +41,9 @@ flaskApp.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 def index():
     users = User.query.all()
     print(users)
-    return render_template('index.html', input_users_list=users)
+    return render_template('table.html',
+                           title='Users Table',
+                           input_users_list=users)
 
 
 if __name__ == '__main__':

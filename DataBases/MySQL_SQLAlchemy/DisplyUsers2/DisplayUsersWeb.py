@@ -42,7 +42,9 @@ flaskApp.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 def index():
     users = User.query.all()
     print(users)
-    return render_template('index.html', input_users_list=users)
+    return render_template('table.html',
+                           title='Users Table',
+                           input_users_list=users)
 
 
 if __name__ == '__main__':

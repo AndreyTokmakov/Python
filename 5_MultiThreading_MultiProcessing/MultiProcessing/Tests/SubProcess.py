@@ -67,6 +67,33 @@ def Test2():
 
 ###################################################################################
 
+def Test3():
+    try:
+        proc = subprocess.Popen(["python", "task.py"],
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT,
+                                shell=False)
+        while True:
+            line = proc.stdout.readline()
+            if not line:
+                break
+            line = str(line.rstrip())
+            line = line.strip("b'")
+            print(line)
+            sys.stdout.flush()
+
+    except OSError as exc:
+        print("Can't run process. Error code = {0}".format(exc))
+        return False
+
+    proc.wait()
+    return_code = proc.poll()
+    print("Return code = {0}".format(return_code))
+
+
+###################################################################################
+
 if __name__ == '__main__':
     # Test1()
-    Test2()
+    # Test2()
+    Test3()
