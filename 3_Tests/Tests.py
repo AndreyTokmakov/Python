@@ -197,8 +197,6 @@ if __name__ == '__main__':
 
     # alisa_team(3)
 
-    n: int = 0
-    n += 1
-    n += 1
-
-    print(n)
+    numbers = [1, 2, 3, 4, 5, 6]
+    result: bool = any(x > 5 for x in numbers)
+    print(result)
