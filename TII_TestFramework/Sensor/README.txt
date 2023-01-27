@@ -1,8 +1,8 @@
 
->  docker build -t test_sensor_image .
+>  docker build -t test_sensor_image_slim .
 
 # To build the IMAGE for ARM64 platform:
->  docker buildx build --platform linux/arm64 -t test_sensor_image_arm64 . --load
+>  docker buildx build --platform linux/arm64 -t test_sensor_image_arm64_2 . --load
 
 # Run container:
 >  sudo docker run --net=host -it --name sensor test_sensor_image_arm64

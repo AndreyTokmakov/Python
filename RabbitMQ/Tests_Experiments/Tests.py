@@ -2,7 +2,7 @@ import time
 
 import pika
 
-credentials = pika.PlainCredentials('admin', 'admin')
+credentials = pika.PlainCredentials('admin', 'qwerty12345')
 
 
 def simple_connection():
@@ -24,7 +24,7 @@ def create_queue():
 
 
 if __name__ == '__main__':
-    # simple_connection()
-    create_queue()
+    simple_connection()
+    # create_queue()
 
     pass
