@@ -1,7 +1,7 @@
 from contextlib import ContextDecorator
 from contextlib import contextmanager
 
-TEMP_FILE = "S:\\Temp\\FILES\\TestFile1.txt";
+TEMP_FILE = '/home/andtokm/DiskS/Temp/TESTING_ROOT_DIR/test.txt'
 
 
 #############
@@ -10,8 +10,6 @@ def SimpleTest():
     with open(TEMP_FILE, 'w') as file:
         file.write('hello')
 
-
-##########################    mycontext  ##########################   
 
 class mycontext(ContextDecorator):
     def __enter__(self):
@@ -28,8 +26,6 @@ def CustomContext_Test():
         print('The bit in the middle')
 
 
-##########################    FileContext  ##########################
-
 class FileContext(object):
 
     def __init__(self,
@@ -42,7 +38,7 @@ class FileContext(object):
         try:
             self.__file_handle = open(self.__file_name, 'w')
         except Exception as exc:
-            print(exc);
+            print(exc)
         return self.__file_handle
 
     def __exit__(self,
@@ -59,8 +55,6 @@ def CustomFileContextTest():
     with FileContext(TEMP_FILE) as file:
         file.write('hello3333311113')
 
-
-##########################    FileContext_WithExc  ##########################
 
 class FileContext_WithExc(object):
 
@@ -80,7 +74,7 @@ class FileContext_WithExc(object):
         try:
             self.__file_handle = open(self.__file_name, 'w')
         except Exception as exc:
-            print(exc);
+            print(exc)
         return self.__file_handle
 
     def __exit__(self,
@@ -103,4 +97,4 @@ def CustomFileContext_WithExcTest():
 if __name__ == '__main__':
     # SimpleTest();
     # CustomContext_Test();
-    CustomFileContextTest();
+    CustomFileContextTest()
