@@ -15,6 +15,7 @@ ap_list = []
 
 def PacketHandler(packet):
     if packet.haslayer(Dot11):
+        print('1')
         if packet.type == 0 and packet.subtype == 8:
             if packet.addr2 not in ap_list:
                 ap_list.append(packet.addr2)

@@ -7,7 +7,10 @@ known = {}
 
 
 def callback(frame):
+    # print("callback")
     if frame.haslayer(Dot11):
+        print("has Dot11 layer")
+
         if frame.haslayer(Dot11Beacon) or frame.haslayer(Dot11ProbeResp):
 
             source = frame[Dot11].addr2

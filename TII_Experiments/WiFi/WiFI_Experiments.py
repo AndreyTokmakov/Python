@@ -1,5 +1,5 @@
-
 from wifi.scan import Cell
+
 
 def scan(interface: str):
     aps = Cell.all(interface)
@@ -8,6 +8,7 @@ def scan(interface: str):
 
     # TODO: To check from cmd
     # >  nmcli dev wifi list
+
 
 if __name__ == '__main__':
     scan("wlp4s0")
