@@ -71,10 +71,10 @@ def sum_three_numbers(a, b, c):
 
 
 def Decorator_With_Params():
-    result = sum_two_numbers(1, 2);
+    result = sum_two_numbers(1, 2)
     print(result)
 
-    result = sum_three_numbers(1, 2, 3);
+    result = sum_three_numbers(1, 2, 3)
     print(result)
 
 
@@ -147,9 +147,9 @@ if __name__ == '__main__':
     # text = hello();
     # print (text)
 
-    # Decorator_With_Params();
+    Decorator_With_Params();
 
     # Append_Result_Text()
     # Append_Result_Text2()
 
-    Function_With_no_Argument();
+    # Function_With_no_Argument()

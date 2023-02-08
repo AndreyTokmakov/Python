@@ -55,6 +55,10 @@ if __name__ == '__main__':
     rabbitmq_host: str = "0.0.0.0"
     client = Client(rabbitmq_host)
 
-    request = {"servers": ["10.10.10.2"], "type": "ping"}
+    # request = {"servers": ["10.10.10.2"], "type": "ping"}
 
+    request = {"servers": ["10.10.10.2"], "type": "attack"}
+    client.send(json.dumps(request))
+
+    request = {"servers": ["192.168.1.6"], "type": "attack"}
     client.send(json.dumps(request))

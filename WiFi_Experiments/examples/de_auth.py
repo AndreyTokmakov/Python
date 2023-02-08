@@ -238,7 +238,8 @@ class deauth:
     def getClients(self, pkt):
         bssid = pkt[Dot11].addr3
         target_bssid = self.target_bssid
-        if target_bssid == bssid and not pkt.haslayer(Dot11Beacon) and not pkt.haslayer(Dot11ProbeReq) and not pkt.haslayer(Dot11ProbeResp):
+        if target_bssid == bssid and not pkt.haslayer(Dot11Beacon) and not pkt.haslayer(Dot11ProbeReq) \
+                and not pkt.haslayer(Dot11ProbeResp):
             print (pkt.summary())
 
     """
