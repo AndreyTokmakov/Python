@@ -184,6 +184,20 @@ def alisa_team(devs_count: int) -> None:
     print("OK")
 
 
+def make_functions():
+    funks = []
+
+    for i in [1, 2, 3]:
+        print(f'make_functions({i})')
+
+        def printer():
+            print(i)
+
+        funks.append(printer)
+
+    return funks
+
+
 if __name__ == '__main__':
     # setTests = SET_Tests();
     # setTests.create()
@@ -197,6 +211,6 @@ if __name__ == '__main__':
 
     # alisa_team(3)
 
-    numbers = [1, 2, 3, 4, 5, 6]
-    result: bool = any(x > 5 for x in numbers)
-    print(result)
+    functions = make_functions()
+    for f in functions:
+        f()
